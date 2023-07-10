@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://unpkg.com/wavesurfer.js"></script>
+        
+        <!-- <script src="https://unpkg.com/wavesurfer.js"></script>
         <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js"></script> -->
+
+        <script src="https://unpkg.com/wavesurfer.js@6.0.0"></script>
+        <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.regions.min.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.timeline.min.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.cursor.min.js"></script>
         <link rel="stylesheet" href="./css/styles.css">
     </head>
 <body>
-    <div id="waveform"></div>
-    <label>Zoom: </label>
-    <input type="range" min="10" max="1000" value="100">  
-    <br>
-    <input type="button" id="play" value="Play"></input>
-    <br>
-    <input type="file" id="fileinput" />
+    <div class="container">
+        <div id="loading" style="display: none;">
+            <div class="loading_text">Loading Transcript Please Wait...</div>
+        </div>
+        <div id="waves">
+            <div id="waveform"></div>
+            <div id="waveform-timeline"></div>
+
+            <div id="waveform-overview"></div>
+            <div id="waveform-timeline-overview"></div>
+
+            <!-- <label>Zoom: </label>
+            <input type="range" min="10" max="1000" value="300">  
+            <br> -->
+            <input type="button" id="play" value="Play"></input>
+            <br>
+            <input type="file" id="fileinput"/>
+        </div>
+    </div>
+    <div>
+        <div id="words" class="words"></div>
+    </div>
+    <script type="text/javascript" src="./js/utils.js"></script>
+    <script type="text/javascript" src="./js/timeline.js"></script>
+    <script type="text/javascript" src="./js/cursor.js"></script>
+    <script type="text/javascript" src="./js/overview.js"></script>
+    <script type="text/javascript" src="./js/words.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>
