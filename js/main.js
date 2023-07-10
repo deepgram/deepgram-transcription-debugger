@@ -55,7 +55,6 @@ function loadAudioTranscript(){
     .then(response => response.json())
     .then((res) => {
         transcript = res.transcript.results.channels[0].alternatives[0].words;
-        console.log('words: ', words);
         let html = '';
         transcript.forEach((word, index)=>{
             html += createWord(word, index);
@@ -171,7 +170,6 @@ function linkTimelines(){
     
 
     wavesurfer.on('audioprocess', (currentTime)=>{
-        console.log('audioprocess: ', currentTime);
         playing = true;
         if(!dragging){
             wavesurferOverview.regions.list[overviewRegionKey].update({ start: currentTime, end: currentTime+5 });
@@ -187,20 +185,14 @@ function linkTimelines(){
     })
 
     wavesurfer.on('play', ()=>{
-        console.log('play');
         playing = true;
     });
 
     wavesurfer.on('pause', ()=>{
-        console.log('pause');
         playing = false;
     });
-    
 
     document.getElementById('waveform').addEventListener('scroll',function(e){
         let x = wavesurfer.drawer.getScrollX();
-        console.log('Scroll: ', x);
     })
-
-    
 }
