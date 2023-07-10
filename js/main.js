@@ -4,6 +4,7 @@ let playTimeout = null;
 let playing = false;
 let dragging = false;
 let transcript = null;
+
 document.getElementById("fileinput").addEventListener('change', function(e){
     var file = this.files[0];
 
@@ -17,6 +18,10 @@ document.getElementById("fileinput").addEventListener('change', function(e){
             
             wavesurfer.load(audio.src);
             wavesurferOverview.load(audio.src);
+            let button = document.getElementById('play');
+            button.style.display = '';
+            dropzone.style.display = 'none';
+            document.getElementById('sample').style.display = 'none';
         };
 
         reader.onerror = function (evt) {
@@ -27,13 +32,35 @@ document.getElementById("fileinput").addEventListener('change', function(e){
     }
 }, false);
 
+document.getElementById("compare").addEventListener('change', function(e){
+    var file = this.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+        
+        reader.onload = function (evt) {
+            var obj = JSON.parse(evt.target.result);
+            console.log('JSON:', obj);
+        };
+
+        reader.onerror = function (evt) {
+            console.error("An error ocurred reading the file: ", evt);
+        };
+
+        reader.readAsText(file);
+    }
+}, false);
+
 document.getElementById('play').addEventListener('click', () => {
-    wavesurfer.playPause()
-    let val = document.getElementById('play').value;
-    if(val == 'Play'){
-        document.getElementById('play').value = 'Pause';
+    let button = document.getElementById('play');
+    wavesurfer.playPause();
+    let className = button.className;
+    if(className != 'pressed'){
+        button.src = './images/pause.png';
+        button.classList.add('pressed');
     } else {
-        document.getElementById('play').value = 'Play';
+        button.src = './images/play.png';
+        button.classList.remove('pressed');
     }
 })
 
@@ -48,7 +75,29 @@ function loadAudioTranscript(){
     const formData = new FormData()
     formData.append('files', input.files[0])
 
-    fetch('https://satori-ai.glitch.me/upload_files', {
+    let model = document.getElementById('model').value;
+    let multichannel = document.getElementById('multichannel').checked;
+    
+    let smart_format = document.getElementById('smart_format').checked;
+    let punctuate = document.getElementById('punctuation').checked;
+    let paragraphs = document.getElementById('paragraphs').checked;
+    let utterances = document.getElementById('utterances').checked;
+    
+    let numerals = document.getElementById('numerals').checked;
+    let profanity_filter = document.getElementById('profanity_filter').checked;
+    //   let redact = ;
+    //   let replace = ;
+    
+    //   let search = ;
+    //   let keywords = ;
+    let diarize = document.getElementById('diarization').checked;
+    
+    let summarize = document.getElementById('summarization').checked;
+    let detect_topics = document.getElementById('topic_detection').checked;
+    let detect_entities = document.getElementById('entity_detection').checked;
+
+    let url = `https://satori-ai.glitch.me/upload_files?model=${model}&multichannel=${multichannel}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}&`;
+    fetch(url, {
         method: 'post',
         body: formData,
     })
@@ -106,13 +155,23 @@ function createWord(word, index){
     if(similar < similarityThreshold){
         similarityClass = 'warning';
     }
-    let html = `<div class="wordDiv ${similarityClass}" id="word_div_${index}">
+    let html = `<div class="wordDiv ${similarityClass}" id="word_div_${index}" onclick="jumpToWord(${index})">
         <span class="word" id="word_${index}">${word.word}</span>
         <br>
         <span class="punctuation" id="punctuation_${index}">${word.punctuated_word}</span>
     </div>`;
 
     return html;
+}
+
+function jumpToWord(index){
+    let word = transcript[index];
+    let progress = word.start / wavesurfer.backend.getDuration();
+    wavesurfer.drawer.recenter(progress);
+    wavesurfer.play(word.start);
+    let button = document.getElementById('play');
+    button.src = './images/pause.png';
+    button.classList.add('pressed');
 }
 
 function linkTimelines(){
@@ -139,7 +198,9 @@ function linkTimelines(){
     wavesurferOverview.on('region-click', (region) => {
         if(region.id == overviewRegionKey){
             wavesurfer.pause();
-            document.getElementById('play').value = 'Play';
+            let button = document.getElementById('play');
+            button.src = './images/play.png';
+            button.classList.remove('pressed');
         }
     });
         
@@ -173,12 +234,13 @@ function linkTimelines(){
         playing = true;
         if(!dragging){
             wavesurferOverview.regions.list[overviewRegionKey].update({ start: currentTime, end: currentTime+5 });
-
             transcript.forEach((word, index)=>{
+                let div = document.getElementById('word_div_'+index);
                 if(currentTime > word.start && currentTime < word.end){
-                    document.getElementById('word_div_'+index).style.border = '1px solid #ee028b';
+                    div.style.border = '1px solid #ee028b';
                 } else {
-                    document.getElementById('word_div_'+index).style.border = 'none';
+                    div.style.border = '1px solid transparent';
+                    div.style.display = 'inline-block';
                 }
             });
         }

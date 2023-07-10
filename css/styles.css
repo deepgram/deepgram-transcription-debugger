@@ -75,6 +75,7 @@ timeline {
     margin-right: 8px;
     display: inline-block;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .word{
@@ -89,7 +90,7 @@ timeline {
     position: relative;
     width: 100%;
     display: block;
-    height: 400px;
+    height: 440px;
 }
 
 #loading{
@@ -118,4 +119,77 @@ timeline {
 
 .warning{
     background-color: #FF880088;
+}
+
+.pressed {
+    filter: saturate(2.2);
+}
+
+.controls{
+    text-align: center;
+}
+
+.settings{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto 1.5em;
+    vertical-align: top;
+}
+
+.settings:after {
+    clear: both;
+}
+
+.setting{
+    display: block;
+}
+
+.section{
+    border: solid 1px #999;
+}
+
+h3{
+    margin-top: 0px;
+}
+
+.first, .second, .third, .fourth, .fifth {
+    display: inline-block;
+    width: 15%;
+    color: white;
+    padding: 10px;
+    height: 140px;
+    min-height: 140px;
+    text-align: start;
+}
+
+ .first, .second, .third, .fourth {
+    margin-right: 10px;
+}
+
+/* Dropzone */
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid lighten(#6583fe, 15%);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.dropzone {
+  border: 0.2rem dashed #1e2c3c;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  font-size: 1.5rem;
+  transition: 0.25s background-color ease-in-out;
+  cursor: pointer;
+}
+
+.dropzone-dragging, .dropzone:hover {
+    background-color: lighten(#1e2c3c, 28%);
+}
+
+.dropzone-input {
+    display: none;
 }

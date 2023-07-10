@@ -28,16 +28,120 @@
             <!-- <label>Zoom: </label>
             <input type="range" min="10" max="1000" value="300">  
             <br> -->
-            <input type="button" id="play" value="Play"></input>
+            <div class="controls">
+                <input type="image" src="./images/play.png" width="20px" id="play" style="display: none;"></input>
+            </div>
+            <div class="dropzone" id="dropzone">                
+                Drop files or Click here to select files to upload.
+                <input type="file" id="fileinput" name="files" class="dropzone-input" />
+            </div>
             <br>
-            <a href="./audio/test.mp3" target="_blank" style="color: #fff;">Sample Audio File</a>
-            <input type="file" id="fileinput"/>
+            <a id="sample" href="./audio/test.mp3" target="_blank" style="color: #fff;">Sample Audio File</a>
+        </div>
+    </div>
+    <div class="settings">
+        <div class="section first">
+            <h3>Debug</h3>
+            <span class="setting">
+                <label>Model</label>
+                <input type="text" id="model" value="nova">
+            </span>
+            <span class="setting">
+                <label>Compare Json</label>
+                <input type="file" id="compare">
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="multichannel">
+                <label>Multichannel</label>
+            </span>
+            <span class="setting">
+                <label>&nbsp;</label>
+            </span>
+        </div>
+
+        <div class="section second">
+            <h3>Formatting</h3>
+            <span class="setting">
+                <input type="checkbox" id="smart_format">
+                <label>Smart Format</label>
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="punctuation">
+                <label>Punctuation</label>
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="paragraphs">
+                <label>Paragraphs</label>
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="utterances">
+                <label>Utterances</label>
+            </span>
+        </div>
+
+        <div class="section third">
+            <h3>Replacement</h3>
+            <span class="setting">
+                <input type="checkbox" id="numerals">
+                <label>Numerals</label>
+            </span>
+            <span class="setting">
+                <input disabled type="checkbox" id="profanity_filter">
+                <label disabled>Profanity Filter</label>
+            </span>
+            <span class="setting">
+                <input disabled type="checkbox" id="redaction">
+                <label disabled>Redaction</label>
+            </span>
+            <span class="setting">
+                <input disabled type="checkbox" id="find_replace">
+                <label disabled>Find and Replace</label>
+            </span>
+        </div>
+
+        <div class="section fourth">
+            <h3>Identification</h3>
+            <span class="setting">
+                <input disabled type="checkbox" id="search">
+                <label disabled>Search</label>
+            </span>
+            <span class="setting">
+                <input disabled type="checkbox" id="keywords">
+                <label disabled>Keywords</label>
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="diarization">
+                <label>Diarization</label>
+            </span>
+            <span class="setting">
+                <label>&nbsp;</label>
+            </span>
+        </div>
+
+        <div class="section fifth">
+            <h3>Inference</h3>
+            <span class="setting">
+                <input type="checkbox" id="summarization">
+                <label>Summarization</label>
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="topic_detection">
+                <label>Topic Detection</label>
+            </span>
+            <span class="setting">
+                <input type="checkbox" id="entity_detection">
+                <label>Entity Detection</label>
+            </span>
+            <span class="setting">
+                <label>&nbsp;</label>
+            </span>
         </div>
     </div>
     <div>
         <div id="words" class="words"></div>
     </div>
     <script type="text/javascript" src="./js/utils.js"></script>
+    <script type="text/javascript" src="./js/dropzone.js"></script>
     <script type="text/javascript" src="./js/timeline.js"></script>
     <script type="text/javascript" src="./js/cursor.js"></script>
     <script type="text/javascript" src="./js/overview.js"></script>
