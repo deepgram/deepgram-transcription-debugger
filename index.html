@@ -39,23 +39,42 @@
             <a id="sample" href="./audio/test.mp3" target="_blank" style="color: #fff;">Sample Audio File</a>
         </div>
     </div>
+    <div>
+        <label>URL Params: </label>
+        <input type="text" id="params">
+    </div>
     <div class="settings">
         <div class="section first">
             <h3>Debug</h3>
             <span class="setting">
                 <label>Model</label>
-                <input type="text" id="model" value="nova">
+                <input type="text" id="model" value="phonecall">
             </span>
             <span class="setting">
-                <label>Compare Json</label>
-                <input type="file" id="compare">
+                <label>Tier</label>
+                <input type="text" id="tier" value="enhanced">
             </span>
+            <span class="setting">
+                <label>Language</label>
+                <input type="text" id="language" value="en-US">
+            </span>
+        </div>
+
+
+        <div class="section first">
+            <h3>Debug</h3>
             <span class="setting">
                 <input type="checkbox" id="multichannel">
                 <label>Multichannel</label>
             </span>
             <span class="setting">
-                <label>&nbsp;</label>
+                <input type="checkbox" id="sentiment">
+                <label>Sentiment</label>
+            </span>
+            <br>
+            <span class="setting">
+                <label>Compare Json</label>
+                <input type="file" id="compare">
             </span>
         </div>
 
@@ -90,24 +109,24 @@
                 <label disabled>Profanity Filter</label>
             </span>
             <span class="setting">
-                <input disabled type="checkbox" id="redaction">
-                <label disabled>Redaction</label>
+                <input type="text" id="redaction">
+                <label>Redaction</label>
             </span>
             <span class="setting">
-                <input disabled type="checkbox" id="find_replace">
-                <label disabled>Find and Replace</label>
+                <input type="text" id="find_replace">
+                <label>Find and Replace</label>
             </span>
         </div>
 
         <div class="section fourth">
             <h3>Identification</h3>
             <span class="setting">
-                <input disabled type="checkbox" id="search">
-                <label disabled>Search</label>
+                <input type="text" id="search">
+                <label>Search</label>
             </span>
             <span class="setting">
-                <input disabled type="checkbox" id="keywords">
-                <label disabled>Keywords</label>
+                <input type="text" id="keywords">
+                <label>Keywords</label>
             </span>
             <span class="setting">
                 <input type="checkbox" id="diarization">

@@ -51,6 +51,55 @@ document.getElementById("compare").addEventListener('change', function(e){
     }
 }, false);
 
+document.getElementById("params").addEventListener('change', function(e){
+    try{
+        let params = document.getElementById("params").value.split('&');
+        let elms = {
+            model: document.getElementById('model'),
+            tier: document.getElementById('tier'),
+            language: document.getElementById('language'),
+            multichannel: document.getElementById('multichannel'),
+            sentiment: document.getElementById('sentiment'),
+            
+            smart_format: document.getElementById('smart_format'),
+            punctuate: document.getElementById('punctuation'),
+            paragraphs: document.getElementById('paragraphs'),
+            utterances: document.getElementById('utterances'),
+            
+            numerals: document.getElementById('numerals'),
+            profanity_filter: document.getElementById('profanity_filter'),
+            redact: document.getElementById('redaction'),
+            replace: document.getElementById('find_replace'),
+        
+            search: document.getElementById('search'),
+            keywords: document.getElementById('keywords'),
+            diarize: document.getElementById('diarization'),
+            
+            summarize: document.getElementById('summarization'),
+            detect_topics: document.getElementById('topic_detection'),
+            detect_entities: document.getElementById('entity_detection')
+        }
+        params.forEach((param)=>{
+            let keyValue = param.split('=');
+            let key = keyValue[0];
+            let value = keyValue[1];
+            if(key == 'model' || key == 'tier' || key == 'language' && elms[key]){
+                elms[key].value = value;
+            } else if(key == 'redact' || key == 'replace' || key == 'search' || key == 'keywords' && elms[key]) {
+                if(!elms[key].value){
+                    elms[key].value = key +'='+value;
+                } else {
+                    elms[key].value += '&' + key +'='+value;
+                }
+            } else if(elms[key]) {
+                elms[key].checked = value == 'true' ? true : false;
+            }
+        })
+    } catch(err){
+        console.log(err);
+    }
+});
+
 document.getElementById('play').addEventListener('click', () => {
     let button = document.getElementById('play');
     wavesurfer.playPause();
@@ -76,7 +125,10 @@ function loadAudioTranscript(){
     formData.append('files', input.files[0])
 
     let model = document.getElementById('model').value;
+    let tier = document.getElementById('tier').value;
+    let language = document.getElementById('language').value;
     let multichannel = document.getElementById('multichannel').checked;
+    let sentiment = document.getElementById('sentiment').checked;
     
     let smart_format = document.getElementById('smart_format').checked;
     let punctuate = document.getElementById('punctuation').checked;
@@ -85,18 +137,30 @@ function loadAudioTranscript(){
     
     let numerals = document.getElementById('numerals').checked;
     let profanity_filter = document.getElementById('profanity_filter').checked;
-    //   let redact = ;
-    //   let replace = ;
-    
-    //   let search = ;
-    //   let keywords = ;
+    let redact = document.getElementById('redaction').value;
+    if(redact){
+        redact = '&' + redact;
+    }
+    let replace = document.getElementById('find_replace').value;
+    if(replace){
+        replace = '&' + replace;
+    }
+
+    let search = document.getElementById('search').value;
+    if(search){
+        search = '&' + search;
+    }
+    let keywords = document.getElementById('keywords').value;
+    if(keywords){
+        keywords = '&' + keywords;
+    }
     let diarize = document.getElementById('diarization').checked;
     
     let summarize = document.getElementById('summarization').checked;
     let detect_topics = document.getElementById('topic_detection').checked;
     let detect_entities = document.getElementById('entity_detection').checked;
 
-    let url = `https://satori-ai.glitch.me/upload_files?model=${model}&multichannel=${multichannel}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}&`;
+    let url = `https://satori-ai.glitch.me/upload_files?model=${model}&tier=${tier}&language=${language}&multichannel=${multichannel}&sentiment=${sentiment}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}${redact}${keywords}${replace}${search}`;
     fetch(url, {
         method: 'post',
         body: formData,
