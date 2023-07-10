@@ -141,6 +141,11 @@ timeline {
     clear: both;
 }
 
+.setting > input[type="text"] {
+    float: right;
+    height: 10px;
+}
+
 .setting{
     display: block;
 }
