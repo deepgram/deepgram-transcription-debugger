@@ -84,8 +84,6 @@ function loadUrlParams(){
     elms['detect_entities'].checked = detect_entities;
 
     loadSettingsToParams();
-
-    document.getElementById('params').value = window.location.search.substring(1);
 }
 
 
@@ -130,4 +128,6 @@ function loadSettingsToParams(){
         }
     })
     updateUrlWithQueryParams(queryParams);
+
+    document.getElementById('params').value = window.location.search.substring(1);
 }
