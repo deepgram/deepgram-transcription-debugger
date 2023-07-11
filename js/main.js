@@ -71,6 +71,7 @@ function loadAudioTranscript(){
             confidenceHtml += createConfidenceWord(word, index);
             diarizationHtml += createDiarizationWord(word, index);
             wavesurfer.addRegion({
+                id: 'wavesurfer_region_'+index,
                 start: word.start,
                 end: word.end,
                 color: '#38edac44',
@@ -82,6 +83,7 @@ function loadAudioTranscript(){
             })
 
             wavesurferOverview.addRegion({
+                id: 'wavesurferOverview_region_'+index,
                 start: word.start,
                 end: word.end,
                 color: '#38edac44',
@@ -239,9 +241,10 @@ function jumpToWord(index){
     let word = transcript.words[index];
     let progress = word.start / wavesurfer.backend.getDuration();
     wavesurfer.drawer.recenter(progress);
-    wavesurfer.play(word.start);
+    // wavesurfer.play(word.start);
+    let region = wavesurfer.regions.list['wavesurfer_region_'+index]
+    region.play();
     let button = document.getElementById('play');
-    button.src = './images/pause.png';
     button.classList.add('pressed');
 }
 
