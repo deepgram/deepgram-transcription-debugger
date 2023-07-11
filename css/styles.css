@@ -317,65 +317,81 @@ h1 {
 /* Tabs */
 .container--tabs {
 	margin: 24px;
+}
 
-	.nav-tabs {
-		float: left;
-		width: calc(100% - 40px);
-		margin: 0;
-		list-style-type: none;
-		border-bottom: 1px solid #ddd;
+.nav-tabs {
+    float: left;
+    width: calc(100% - 40px);
+    margin: 0;
+    list-style-type: none;
+    border-bottom: 1px solid #ddd;
+}
 
-		> li {
-			float: left;
-			margin-bottom: -1px;
+li {
+    float: left;
+    margin-bottom: -1px;
+}
 
-			> a {
-				float: left;
-				margin-right: 2px;
-				line-height: 1.42857143;
-				padding: 10px;
-				border: 1px solid transparent;
-				border-radius: 4px 4px 0 0;
+li > .active {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+.active > a{
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+.active > a:hover{
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+.active > a:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
 
-				&:hover {
-					border-color: #eee #eee #ddd;
-				}
-			}
+li > a {
+    float: left;
+    margin-right: 2px;
+    line-height: 1.42857143;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
 
-			&.active {
-				> a,
-				> a:hover,
-				> a:focus {
-					color: #555;
-					cursor: default;
-					background-color: #fff;
-					border: 1px solid #ddd;
-					border-bottom-color: transparent;
-				}
-			}
-		}
-	}
+li > a:hover {
+    border-color: #eee #eee #ddd;
+}
 
-	.tab-content {
-		float: left;
-		width: 100%;
-		> .tab-pane {
-			display: none;
-            min-height: 240px;
-			&.active {
-				display: block;
-				padding: 4px;
-                border-left: solid 1px #999;
-                border-right: solid 1px #999;
-                border-bottom: solid 1px #999;
-			}
-		}
-		> .active {
-			display: block;
-		}
-	}
+.tab-content {
+    float: left;
+    width: 100%;
+}
 
-    
+.tab-content > .tab-pane {
+    display: none;
+    min-height: 240px;
+}
+.tab-pane {
+    display: block;
+    padding: 4px;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+    border-bottom: solid 1px #999;
+}
+.tab-content > .active {
+    display: block;
 }
 
 a{
