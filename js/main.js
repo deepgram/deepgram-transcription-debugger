@@ -101,7 +101,7 @@ function loadAudioTranscript(){
             let paragraphHTML = '';
             let paragraphs = transcript.paragraphs.paragraphs;
             paragraphs.forEach((paragraph)=>{
-                paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre>';
+                paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre><hr class="paragraphHR">';
             })
             document.getElementById('paragraphsDiv').innerHTML = paragraphHTML;
         }
@@ -140,7 +140,7 @@ function createPunctuationWord(word, index){
         word:"hi"
     */
     if(word.punctuated_word){
-        similarity(word.word, word.punctuated_word);
+        similar = similarity(word.word, word.punctuated_word);
         words_val = word.punctuated_word;
     }
 

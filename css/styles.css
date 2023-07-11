@@ -397,3 +397,7 @@ li > a:hover {
 a{
     color: #fff;
 }
+
+.paragraphHR{
+    border-top: #999;
+}
