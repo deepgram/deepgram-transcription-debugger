@@ -8,8 +8,11 @@ body{
 }
 
 region.wavesurfer-region:before {
+    background-color: #979797;
+    padding: 4px;
     content: attr(data-region-label);
     position: absolute;
+    font-size: 20px;
     bottom: -15px;
     left: 0px;
     z-index: 998;
@@ -28,11 +31,15 @@ region.wavesurfer-region:before {
 
 
 #waveform{
-    background: rgba(0,0,0,0.8);
-    margin-bottom: 10px;
+    background: #444444cc;
+    margin-bottom: -10px;
 }
 #waveform-overview{
-    background: rgba(0,0,0,0.8);
+    background: #444444cc;
+    margin-bottom: 10px;
+}
+
+#waveform-timeline{
     margin-bottom: 10px;
 }
 
@@ -65,9 +72,19 @@ timeline {
     margin-top: 20px;
 }
 
-.words{
+.green{
+    color: #38edac;
+}
+
+.results{
     text-align: start;
-    margin: 20px;
+    margin: 10px;
+}
+
+.infoDiv {
+    margin-top: 4px;
+    font-weight: bold;
+    color: #ee028b;
 }
 
 .wordDiv{
@@ -100,7 +117,7 @@ timeline {
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 400px;
+    height: 430px;
     z-index: 1000;
     text-align: center;
     margin: auto;
@@ -117,16 +134,95 @@ timeline {
     width: 100%;
 }
 
+.neutral{
+    color: #0f0;
+}
+
+.positive{
+    color: #ff0;
+}
+
+.negative{
+    color: #f00;
+}
+
+#speaker_1{
+    color: #f00;
+}
+
+#speaker_2{
+    color: #0f0;
+}
+
+#speaker_3{
+    color: #00f;
+}
+
+#speaker_4{
+    color: #ff0;
+}
+
+#speaker_5{
+    color: #f0f;
+}
+
+#speaker_6{
+    color: #0ff;
+}
+
+#speaker_7{
+    color: #f80;
+}
+
+#speaker_8{
+    color: #08f;
+}
+
+#speaker_9{
+    color: #f08;
+}
+
+#speaker_10{
+    color: #80f;
+}
+
+.info{
+    background-color: #FFFF0088;
+}
+
 .warning{
     background-color: #FF880088;
 }
 
+.error{
+    background-color: #FF000088;
+}
+
 .pressed {
-    filter: saturate(2.2);
+    filter: saturate(20);
 }
 
 .controls{
     text-align: center;
+    border: solid 1px #999;
+    border-radius: 10px;
+    height: 40px;
+    width: 140px;
+    margin: auto;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+.params{
+    margin-bottom: 10px;
+}
+
+.params > input[type="text"]{
+    width: 600px;
+}
+
+#play{
+    margin-right: 30px;
 }
 
 .settings{
@@ -172,6 +268,21 @@ h3{
     margin-right: 10px;
 }
 
+pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 15px;
+}
+
+.paragraphs{
+    text-align: left;
+}
+
+.summary{
+    text-align: left;
+}
+
 /* Dropzone */
 h1 {
   text-align: center;
@@ -197,4 +308,71 @@ h1 {
 
 .dropzone-input {
     display: none;
+}
+
+/* Tabs */
+.container--tabs {
+	margin: 2rem;
+
+	.nav-tabs {
+		float: left;
+		width: 100%;
+		margin: 0;
+		list-style-type: none;
+		border-bottom: 1px solid #ddd;
+
+		> li {
+			float: left;
+			margin-bottom: -1px;
+
+			> a {
+				float: left;
+				margin-right: 2px;
+				line-height: 1.42857143;
+				padding: 10px;
+				border: 1px solid transparent;
+				border-radius: 4px 4px 0 0;
+
+				&:hover {
+					border-color: #eee #eee #ddd;
+				}
+			}
+
+			&.active {
+				> a,
+				> a:hover,
+				> a:focus {
+					color: #555;
+					cursor: default;
+					background-color: #fff;
+					border: 1px solid #ddd;
+					border-bottom-color: transparent;
+				}
+			}
+		}
+	}
+
+	.tab-content {
+		float: left;
+		width: 100%;
+		> .tab-pane {
+			display: none;
+			&.active {
+				display: block;
+				padding: 4px;
+                border-left: solid 1px #fff;
+                border-right: solid 1px #fff;
+                border-bottom: solid 1px #fff;
+			}
+		}
+		> .active {
+			display: block;
+		}
+	}
+
+    
+}
+
+a{
+    color: #fff;
 }

@@ -116,5 +116,5 @@ function primaryLabelInterval(pxPerSec) {
  */
 function secondaryLabelInterval(pxPerSec) {
     // draw one every 10s as an example
-    return Math.floor(10 / timeInterval(pxPerSec));
+    return Math.floor(5 / timeInterval(pxPerSec));
 }

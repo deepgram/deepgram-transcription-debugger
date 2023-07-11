@@ -4,114 +4,7 @@ let playTimeout = null;
 let playing = false;
 let dragging = false;
 let transcript = null;
-
-document.getElementById("fileinput").addEventListener('change', function(e){
-    var file = this.files[0];
-
-    if (file) {
-        var reader = new FileReader();
-        
-        reader.onload = function (evt) {
-            var blob = new window.Blob([new Uint8Array(evt.target.result)]);
-            let audio = new Audio();
-            audio.src = URL.createObjectURL(blob);
-            
-            wavesurfer.load(audio.src);
-            wavesurferOverview.load(audio.src);
-            let button = document.getElementById('play');
-            button.style.display = '';
-            dropzone.style.display = 'none';
-            document.getElementById('sample').style.display = 'none';
-        };
-
-        reader.onerror = function (evt) {
-            console.error("An error ocurred reading the file: ", evt);
-        };
-
-        reader.readAsArrayBuffer(file);
-    }
-}, false);
-
-document.getElementById("compare").addEventListener('change', function(e){
-    var file = this.files[0];
-
-    if (file) {
-        var reader = new FileReader();
-        
-        reader.onload = function (evt) {
-            var obj = JSON.parse(evt.target.result);
-            console.log('JSON:', obj);
-        };
-
-        reader.onerror = function (evt) {
-            console.error("An error ocurred reading the file: ", evt);
-        };
-
-        reader.readAsText(file);
-    }
-}, false);
-
-document.getElementById("params").addEventListener('change', function(e){
-    try{
-        let params = document.getElementById("params").value.split('&');
-        let elms = {
-            model: document.getElementById('model'),
-            tier: document.getElementById('tier'),
-            language: document.getElementById('language'),
-            multichannel: document.getElementById('multichannel'),
-            sentiment: document.getElementById('sentiment'),
-            
-            smart_format: document.getElementById('smart_format'),
-            punctuate: document.getElementById('punctuation'),
-            paragraphs: document.getElementById('paragraphs'),
-            utterances: document.getElementById('utterances'),
-            
-            numerals: document.getElementById('numerals'),
-            profanity_filter: document.getElementById('profanity_filter'),
-            redact: document.getElementById('redaction'),
-            replace: document.getElementById('find_replace'),
-        
-            search: document.getElementById('search'),
-            keywords: document.getElementById('keywords'),
-            diarize: document.getElementById('diarization'),
-            
-            summarize: document.getElementById('summarization'),
-            detect_topics: document.getElementById('topic_detection'),
-            detect_entities: document.getElementById('entity_detection')
-        }
-        params.forEach((param)=>{
-            let keyValue = param.split('=');
-            let key = keyValue[0];
-            let value = keyValue[1];
-            if(key == 'model' || key == 'tier' || key == 'language' && elms[key]){
-                elms[key].value = value;
-            } else if(key == 'redact' || key == 'replace' || key == 'search' || key == 'keywords' && elms[key]) {
-                if(!elms[key].value){
-                    elms[key].value = key +'='+value;
-                } else {
-                    elms[key].value += '&' + key +'='+value;
-                }
-            } else if(elms[key]) {
-                elms[key].checked = value == 'true' ? true : false;
-            }
-        })
-    } catch(err){
-        console.log(err);
-    }
-});
-
-document.getElementById('play').addEventListener('click', () => {
-    let button = document.getElementById('play');
-    wavesurfer.playPause();
-    let className = button.className;
-    if(className != 'pressed'){
-        button.src = './images/pause.png';
-        button.classList.add('pressed');
-    } else {
-        button.src = './images/play.png';
-        button.classList.remove('pressed');
-    }
-})
+let audioObj = null;
 
 function loadAudioTranscript(){
     let loading = document.getElementById('loading');
@@ -167,10 +60,16 @@ function loadAudioTranscript(){
     })
     .then(response => response.json())
     .then((res) => {
-        transcript = res.transcript.results.channels[0].alternatives[0].words;
-        let html = '';
-        transcript.forEach((word, index)=>{
-            html += createWord(word, index);
+        transcript = res.transcript.results.channels[0].alternatives[0];
+        let wordHtml = '';
+        let sentimentHtml = '';
+        let confidenceHtml = '';
+        let diarizationHtml = '';
+        transcript.words.forEach((word, index)=>{
+            wordHtml += createPunctuationWord(word, index);
+            sentimentHtml += createSentimentWord(word, index);
+            confidenceHtml += createConfidenceWord(word, index);
+            diarizationHtml += createDiarizationWord(word, index);
             wavesurfer.addRegion({
                 start: word.start,
                 end: word.end,
@@ -193,14 +92,58 @@ function loadAudioTranscript(){
                 //   }
             })
         })
-        document.getElementById('words').innerHTML = html;
+        document.getElementById('wordsDiv').innerHTML = wordHtml;
+        document.getElementById('sentimentDiv').innerHTML = sentimentHtml;
+        document.getElementById('confidenceDiv').innerHTML = confidenceHtml;
+        document.getElementById('diarizationDiv').innerHTML = diarizationHtml;
+
+        if(transcript.paragraphs){
+            let paragraphHTML = '';
+            let paragraphs = transcript.paragraphs.paragraphs;
+            paragraphs.forEach((paragraph)=>{
+                paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre>';
+            })
+            document.getElementById('paragraphsDiv').innerHTML = paragraphHTML;
+        }
+        if(transcript.summaries){
+            let summaryHTML = '';
+            let summaries = transcript.summaries;
+            summaries.forEach((summary)=>{
+                summaryHTML += '<pre>' + summary.summary + '</pre>';
+            })
+            document.getElementById('summaryDiv').innerHTML = summaryHTML;
+        }
+        /*
+        paragraphs.paragraphs
+            end:10.074161
+            num_words:11
+            sentences:[{text: "Hi.", start: 6.63668, end: 6.8365803},…]
+            start:6.63668
+            */
         loading.style.display = 'none';
     })
-    .catch((err) => ('Error occurred', err))
+    .catch((err) => console.log('Error occurred', err))
 }
 
-function createWord(word, index){
-    let similar = similarity(word.word, word.punctuated_word);
+function createPunctuationWord(word, index){
+    let similar = 1;
+    let words_val = '';
+    
+    /*
+        confidence:0.7202066
+        end:9.54444
+        punctuated_word:"Hi."
+        sentiment:"neutral"
+        speaker:0
+        speaker_confidence:0.6268749
+        start:9.26458
+        word:"hi"
+    */
+    if(word.punctuated_word){
+        similarity(word.word, word.punctuated_word);
+        words_val = word.punctuated_word;
+    }
+
     let similarityClass = '';
     let similarityThreshold = 0.75;
     // Ignore single letters
@@ -221,12 +164,76 @@ function createWord(word, index){
     }
     let html = `<div class="wordDiv ${similarityClass}" id="word_div_${index}" onclick="jumpToWord(${index})">
         <span class="word" id="word_${index}">${word.word}</span>
-        <br>
-        <span class="punctuation" id="punctuation_${index}">${word.punctuated_word}</span>
-    </div>`;
+        <br>`;
+    if(words_val){
+        html += `<span class="punctuation" id="punctuation_${index}">${words_val}</span>`
+    }
+    html += `</div>`;
 
     return html;
 }
+
+function createSentimentWord(word, index){
+    let html = `<div class="wordDiv ${word.sentiment}" id="sentiment_div_${index}" onclick="jumpToWord(${index})">
+        <span class="word" id="word_${index}">${word.word}</span>
+        <br>`;
+    if(word.sentiment){
+        html += `<span class="punctuation" id="sentiment_${index}">${word.sentiment}</span>`
+    }
+    html += `</div>`;
+    return html;
+}
+
+function createConfidenceWord(word, index){
+    let similarityClass = '';
+    if(word.confidence < 0.5){
+        similarityClass = 'error';
+    } 
+    else if(word.confidence < 0.75){
+        similarityClass = 'warning';
+    } else if(word.confidence < 0.95){
+        similarityClass = 'info';
+    } else {
+        similarityClass = '';
+    }
+
+    let html = `<div class="wordDiv ${similarityClass}" id="confidence_div_${index}" onclick="jumpToWord(${index})">
+        <span class="word" id="word_${index}">${word.word}</span>
+        <br>`;
+    if(word.confidence){
+        html += `<span class="punctuation" id="confidence_${index}">${word.confidence.toFixed(2)}</span>`
+    }
+    html += `</div>`;
+    return html;
+}
+
+function createDiarizationWord(word, index){
+    let html = `<div class="wordDiv speaker_${word.speaker}" id="speaker_div_${index}" onclick="jumpToWord(${index})">
+        <span class="word" id="word_${index}">${word.word}</span>
+        <br>`;
+    if(word.speaker !== null){
+        html += `<span class="punctuation" id="speaker_${word.speaker}">#${word.speaker}</span>`
+    }
+    html += `</div>`;
+    return html;
+}
+
+// function createWord(word, index){
+//     let sentiment_val = '';
+//     if(word.sentiment){
+//         sentiment_val = word.sentiment;
+//     }
+
+//     // Sentiment
+//     let sentimentHTML = `<div class="wordDiv ${similarityClass}" id="word_div_${index}" onclick="jumpToWord(${index})">
+//         <span class="word" id="word_${index}">${word.word}</span>
+//         <br>`;
+//     if(sentiment_val){
+//         sentimentHTML += `<span class="punctuation" id="sentiment_${index}">${sentiment_val}</span>`
+//     }
+//     sentimentHTML += `</div>`;
+//     return sentimentHTML;
+// }
 
 function jumpToWord(index){
     let word = transcript[index];

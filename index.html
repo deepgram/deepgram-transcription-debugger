@@ -28,10 +28,11 @@
             <!-- <label>Zoom: </label>
             <input type="range" min="10" max="1000" value="300">  
             <br> -->
-            <div class="controls">
-                <input type="image" src="./images/play.png" width="20px" id="play" style="display: none;"></input>
+            <div id="controls" class="controls" style="display: none;">
+                <input type="image" src="./images/play.png" width="20px" id="play"></input>
+                <input type="image" src="./images/pause.png" width="20px" id="pause"></input>
             </div>
-            <div class="dropzone" id="dropzone">                
+            <div class="dropzone green" id="dropzone">                
                 Drop files or Click here to select files to upload.
                 <input type="file" id="fileinput" name="files" class="dropzone-input" />
             </div>
@@ -39,7 +40,7 @@
             <a id="sample" href="./audio/test.mp3" target="_blank" style="color: #fff;">Sample Audio File</a>
         </div>
     </div>
-    <div>
+    <div class="params">
         <label>URL Params: </label>
         <input type="text" id="params">
     </div>
@@ -58,6 +59,12 @@
                 <label>Language</label>
                 <input type="text" id="language" value="en-US">
             </span>
+            <span class="setting">
+                <label>&nbsp;</label>
+            </span>
+            <span class="setting">
+                <input type="button" id="update" value="Update Settings">
+            </span>
         </div>
 
 
@@ -68,11 +75,11 @@
                 <label>Multichannel</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="sentiment">
+                <input type="checkbox" id="sentiment" checked>
                 <label>Sentiment</label>
             </span>
             <br>
-            <span class="setting">
+            <span class="setting" style="display: none;">
                 <label>Compare Json</label>
                 <input type="file" id="compare">
             </span>
@@ -85,11 +92,11 @@
                 <label>Smart Format</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="punctuation">
+                <input type="checkbox" id="punctuation" checked>
                 <label>Punctuation</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="paragraphs">
+                <input type="checkbox" id="paragraphs" checked>
                 <label>Paragraphs</label>
             </span>
             <span class="setting">
@@ -121,7 +128,7 @@
         <div class="section fourth">
             <h3>Identification</h3>
             <span class="setting">
-                <input type="checkbox" id="diarization">
+                <input type="checkbox" id="diarization" checked>
                 <label>Diarization</label>
             </span>
             <span class="setting">
@@ -140,7 +147,7 @@
         <div class="section fifth">
             <h3>Inference</h3>
             <span class="setting">
-                <input type="checkbox" id="summarization">
+                <input type="checkbox" id="summarization" checked>
                 <label>Summarization</label>
             </span>
             <span class="setting">
@@ -156,15 +163,52 @@
             </span>
         </div>
     </div>
-    <div>
-        <div id="words" class="words"></div>
+    <div class="container--tabs">
+        <section class="row">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#paragraphsTab">Paragraphs</a></li>
+                <li class=""><a href="#summaryTab">Summary</a></li>
+                <li class=""><a href="#wordTab">Punctuation</a></li>
+                <li class=""><a href="#confidenceTab">Confidence</a></li>
+                <li class=""><a href="#diarizationTab">Diarization</a></li>
+                <li class=""><a href="#sentimentTab">Senitment</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="paragraphsTab" class="tab-pane active">
+                    <div class="infoDiv">Detected Paragraphs:</div>
+                    <div id="paragraphsDiv" class="results"></div>
+                </div>
+                <div id="summaryTab" class="tab-pane">
+                    <div class="infoDiv">Summary of Transcription:</div>
+                    <div id="summaryDiv" class="results"></div>
+                </div>
+                <div id="wordTab" class="tab-pane"> 
+                    <div class="infoDiv">White = Detected Word / <span class="green">Green = Punctuated Word</span></div>
+                    <div id="wordsDiv" class="results"></div>
+                </div> 
+                <div id="sentimentTab" class="tab-pane">
+                    <div class="infoDiv">White = Detected Word / <span class="green">Green = Sentiment</span></div>
+                    <div id="sentimentDiv" class="results"></div>
+                </div>
+                <div id="diarizationTab" class="tab-pane">
+                    <div class="infoDiv">White = Detected Word / <span class="green">Green = Speaker #</span></div>
+                    <div id="diarizationDiv" class="results"></div>
+                </div>
+                <div id="confidenceTab" class="tab-pane">
+                    <div class="infoDiv">White = Detected Word / <span class="green">Green = Confidence</span></div>
+                    <div id="confidenceDiv" class="results"></div>
+                </div>
+            </div>
+        </section>
     </div>
     <script type="text/javascript" src="./js/utils.js"></script>
+    <script type="text/javascript" src="./js/tabs.js"></script>
     <script type="text/javascript" src="./js/dropzone.js"></script>
     <script type="text/javascript" src="./js/timeline.js"></script>
     <script type="text/javascript" src="./js/cursor.js"></script>
     <script type="text/javascript" src="./js/overview.js"></script>
     <script type="text/javascript" src="./js/words.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/events.js"></script>
 </body>
 </html>
