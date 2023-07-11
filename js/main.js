@@ -162,7 +162,7 @@ function createPunctuationWord(word, index){
     if(similar < similarityThreshold){
         similarityClass = 'warning';
     }
-    let html = `<div class="wordDiv ${similarityClass}" id="word_div_${index}" onclick="jumpToWord(${index})">
+    let html = `<div class="wordDiv ${similarityClass}" id="words_div_${index}" onclick="jumpToWord(${index})">
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(words_val){
@@ -236,7 +236,7 @@ function createDiarizationWord(word, index){
 // }
 
 function jumpToWord(index){
-    let word = transcript[index];
+    let word = transcript.words[index];
     let progress = word.start / wavesurfer.backend.getDuration();
     wavesurfer.drawer.recenter(progress);
     wavesurfer.play(word.start);
@@ -275,7 +275,6 @@ function linkTimelines(){
         }
     });
         
-
     wavesurferOverview.on('region-updated', (region) => {
         if(region.id == overviewRegionKey && !playing){
             dragging = true;
@@ -305,15 +304,17 @@ function linkTimelines(){
         playing = true;
         if(!dragging){
             wavesurferOverview.regions.list[overviewRegionKey].update({ start: currentTime, end: currentTime+5 });
-            transcript.forEach((word, index)=>{
-                let div = document.getElementById('word_div_'+index);
-                if(currentTime > word.start && currentTime < word.end){
-                    div.style.border = '1px solid #ee028b';
-                } else {
-                    div.style.border = '1px solid transparent';
-                    div.style.display = 'inline-block';
-                }
-            });
+            ['words', 'sentiment', 'confidence', 'speaker'].forEach((key)=>{
+                transcript.words.forEach((word, index)=>{
+                    let div = document.getElementById(key+'_div_'+index);
+                    if(currentTime > word.start && currentTime < word.end){
+                        div.style.border = '1px solid #ee028b';
+                    } else {
+                        div.style.border = '1px solid transparent';
+                        div.style.display = 'inline-block';
+                    }
+                });
+            })
         }
     })
 
