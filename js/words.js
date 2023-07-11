@@ -1,5 +1,6 @@
 var wavesurfer = WaveSurfer.create({
     container: '#waveform',
+    hideScrollbar: true,
     waveColor: '#ae29ff',
     cursorColor: '#f00',
     cursorWidth: 4,

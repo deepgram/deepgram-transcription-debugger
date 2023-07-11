@@ -25,13 +25,13 @@ function formatTimeCallback(seconds, pxPerSec) {
         secondsStr = seconds.toFixed(1);
     }
 
-    if (minutes > 0) {
-        if (seconds < 10) {
-            secondsStr = '0' + secondsStr;
-        }
-        return `${minutes}:${secondsStr}`;
+
+    if (seconds < 10) {
+        secondsStr = '0' + secondsStr;
     }
-    return secondsStr;
+    return `${minutes}:${secondsStr}`;
+    // }
+    // return secondsStr;
 }
 
 /**

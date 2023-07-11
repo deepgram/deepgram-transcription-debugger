@@ -1,5 +1,6 @@
 var wavesurferOverview = WaveSurfer.create({
     container: '#waveform-overview',
+    hideScrollbar: true,
     waveColor: '#ae29ff',
     progressColor: '#ee028b',
     backend: 'WebAudio',

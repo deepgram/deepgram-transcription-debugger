@@ -65,7 +65,11 @@ cursor {
 }
 
 #waveform > wave {
-    height: 150px !important;
+    height: 100px !important;
+}
+
+#waveform-overview > wave {
+    height: 50px !important;
 }
 
 timeline {
@@ -107,7 +111,7 @@ timeline {
     position: relative;
     width: 100%;
     display: block;
-    height: 440px;
+    height: 310px;
 }
 
 #loading{
@@ -117,7 +121,7 @@ timeline {
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 430px;
+    height: 300px;
     z-index: 1000;
     text-align: center;
     margin: auto;
@@ -312,11 +316,11 @@ h1 {
 
 /* Tabs */
 .container--tabs {
-	margin: 2rem;
+	margin: 24px;
 
 	.nav-tabs {
 		float: left;
-		width: 100%;
+		width: calc(100% - 40px);
 		margin: 0;
 		list-style-type: none;
 		border-bottom: 1px solid #ddd;
@@ -357,12 +361,13 @@ h1 {
 		width: 100%;
 		> .tab-pane {
 			display: none;
+            min-height: 240px;
 			&.active {
 				display: block;
 				padding: 4px;
-                border-left: solid 1px #fff;
-                border-right: solid 1px #fff;
-                border-bottom: solid 1px #fff;
+                border-left: solid 1px #999;
+                border-right: solid 1px #999;
+                border-bottom: solid 1px #999;
 			}
 		}
 		> .active {
