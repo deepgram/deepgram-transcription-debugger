@@ -16,6 +16,7 @@ document.getElementById("fileinput").addEventListener('change', function(e){
             controls.style.display = '';
             dropzone.style.display = 'none';
             document.getElementById('sample').style.display = 'none';
+            audioObj = true;
         };
 
         reader.onerror = function (evt) {
@@ -73,22 +74,28 @@ document.getElementById("params").addEventListener('change', function(e){
             detect_topics: document.getElementById('topic_detection'),
             detect_entities: document.getElementById('entity_detection')
         }
+        let queryParams = {};
         params.forEach((param)=>{
             let keyValue = param.split('=');
             let key = keyValue[0];
             let value = keyValue[1];
             if(key == 'model' || key == 'tier' || key == 'language' && elms[key]){
                 elms[key].value = value;
+                queryParams[key] = elms[key].value;
             } else if(key == 'redact' || key == 'replace' || key == 'search' || key == 'keywords' && elms[key]) {
                 if(!elms[key].value){
                     elms[key].value = key +'='+value;
+                    queryParams[key] = elms[key].value;
                 } else {
                     elms[key].value += '&' + key +'='+value;
+                    queryParams[key] = elms[key].value;
                 }
             } else if(elms[key]) {
                 elms[key].checked = value == 'true' ? true : false;
+                queryParams[key] = elms[key].checked;
             }
         })
+        updateUrlWithQueryParams(queryParams);
     } catch(err){
         console.log(err);
     }
@@ -123,9 +130,15 @@ document.getElementById('pause').addEventListener('click', () => {
 })
 
 document.getElementById('update').addEventListener('click', () => {
+    if(!audioObj){
+        alert('You need to select an audio file first to load these settings.');
+        return;
+    }
     loadAudioTranscript();
-    document.getElementById('words').innerHTML = '';
-    document.getElementById('paragraphs').innerHTML = '';
-    document.getElementById('summary').innerHTML = '';
-    document.getElementById('diarization').innerHTML = '';
+    document.getElementById('wordsDiv').innerHTML = '';
+    document.getElementById('paragraphsDiv').innerHTML = '';
+    document.getElementById('summaryDiv').innerHTML = '';
+    document.getElementById('diarizationDiv').innerHTML = '';
+    document.getElementById('sentimentDiv').innerHTML = '';
+    document.getElementById('confidenceDiv').innerHTML = '';
 })

@@ -49,15 +49,15 @@
             <h3>Debug</h3>
             <span class="setting">
                 <label>Model</label>
-                <input type="text" id="model" value="phonecall">
+                <input type="text" id="model" value="phonecall" onchange="loadSettingsToParams()">
             </span>
             <span class="setting">
                 <label>Tier</label>
-                <input type="text" id="tier" value="enhanced">
+                <input type="text" id="tier" value="enhanced" onchange="loadSettingsToParams()">
             </span>
             <span class="setting">
                 <label>Language</label>
-                <input type="text" id="language" value="en-US">
+                <input type="text" id="language" value="en-US" onchange="loadSettingsToParams()">
             </span>
             <span class="setting">
                 <label>&nbsp;</label>
@@ -71,11 +71,11 @@
         <div class="section first">
             <h3>Debug</h3>
             <span class="setting">
-                <input type="checkbox" id="multichannel">
+                <input type="checkbox" id="multichannel" onchange="loadSettingsToParams()">
                 <label>Multichannel</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="sentiment" checked>
+                <input type="checkbox" id="sentiment" checked onchange="loadSettingsToParams()">
                 <label>Sentiment</label>
             </span>
             <br>
@@ -88,19 +88,19 @@
         <div class="section second">
             <h3>Formatting</h3>
             <span class="setting">
-                <input type="checkbox" id="smart_format">
+                <input type="checkbox" id="smart_format" onchange="loadSettingsToParams()">
                 <label>Smart Format</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="punctuation" checked>
+                <input type="checkbox" id="punctuation" checked onchange="loadSettingsToParams()">
                 <label>Punctuation</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="paragraphs" checked>
+                <input type="checkbox" id="paragraphs" checked onchange="loadSettingsToParams()">
                 <label>Paragraphs</label>
             </span>
             <span class="setting">
-                <input type="checkbox" id="utterances">
+                <input type="checkbox" id="utterances" onchange="loadSettingsToParams()">
                 <label>Utterances</label>
             </span>
         </div>
@@ -108,36 +108,36 @@
         <div class="section third">
             <h3>Replacement</h3>
             <span class="setting">
-                <input type="checkbox" id="numerals">
+                <input type="checkbox" id="numerals" onchange="loadSettingsToParams()">
                 <label>Numerals</label>
             </span>
             <span class="setting">
-                <input disabled type="checkbox" id="profanity_filter">
+                <input disabled type="checkbox" id="profanity_filter" onchange="loadSettingsToParams()">
                 <label disabled>Profanity Filter</label>
             </span>
             <span class="setting">
                 <label>Redaction</label>
-                <input type="text" id="redaction">
+                <input type="text" id="redaction" onchange="loadSettingsToParams()">
             </span>
             <span class="setting">
                 <label>Replace</label>
-                <input type="text" id="find_replace">
+                <input type="text" id="find_replace" onchange="loadSettingsToParams()">
             </span>
         </div>
 
         <div class="section fourth">
             <h3>Identification</h3>
             <span class="setting">
-                <input type="checkbox" id="diarization" checked>
+                <input type="checkbox" id="diarization" checked onchange="loadSettingsToParams()">
                 <label>Diarization</label>
             </span>
             <span class="setting">
                 <label>Search</label>
-                <input type="text" id="search">
+                <input type="text" id="search" onchange="loadSettingsToParams()">
             </span>
             <span class="setting">
                 <label>Keywords</label>
-                <input type="text" id="keywords">
+                <input type="text" id="keywords" onchange="loadSettingsToParams()">
             </span>
             <span class="setting">
                 <label>&nbsp;</label>
@@ -202,6 +202,7 @@
         </section>
     </div>
     <script type="text/javascript" src="./js/utils.js"></script>
+    <script type="text/javascript" src="./js/params.js"></script>
     <script type="text/javascript" src="./js/tabs.js"></script>
     <script type="text/javascript" src="./js/dropzone.js"></script>
     <script type="text/javascript" src="./js/timeline.js"></script>

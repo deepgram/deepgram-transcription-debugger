@@ -6,6 +6,8 @@ let dragging = false;
 let transcript = null;
 let audioObj = null;
 
+loadUrlParams();
+
 function loadAudioTranscript(){
     let loading = document.getElementById('loading');
     loading.style.display = 'block';
@@ -52,6 +54,8 @@ function loadAudioTranscript(){
     let summarize = document.getElementById('summarization').checked;
     let detect_topics = document.getElementById('topic_detection').checked;
     let detect_entities = document.getElementById('entity_detection').checked;
+
+    loadSettingsToParams();
 
     let url = `https://satori-ai.glitch.me/upload_files?model=${model}&tier=${tier}&language=${language}&multichannel=${multichannel}&sentiment=${sentiment}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}${redact}${keywords}${replace}${search}`;
     fetch(url, {
