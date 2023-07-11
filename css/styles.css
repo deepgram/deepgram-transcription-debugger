@@ -399,5 +399,6 @@ a{
 }
 
 .paragraphHR{
-    border-top: #999;
+    border: solid 1px #484848;
+    border-bottom: none;
 }
