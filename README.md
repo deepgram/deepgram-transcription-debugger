@@ -4,6 +4,8 @@
 
 This tool is for debugging Deepgram Transcription of Pre-Recorded Audio.
 
+![Visualization](./images/screenshot_1.png)
+
 ## Loading Params
 
 You can paste the url params used to query the Deepgram API to load those settings into this tool.
