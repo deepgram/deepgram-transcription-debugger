@@ -156,7 +156,7 @@ function loadSettingsToParams(){
         if(key == 'model' || key == 'tier' || key == 'language' && elms[key]){
             queryParams[key] = elms[key].value;
         } else if(key == 'redact' || key == 'replace' || key == 'search' || key == 'keywords' && elms[key]) {
-            if(!elms[key].value){
+            if(!queryParams[key]){
                 queryParams[key] = elms[key].value;
             } else {
                 queryParams[key] += '&' + key +'='+elms[key].value;
