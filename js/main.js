@@ -6,7 +6,10 @@ let dragging = false;
 let transcript = null;
 let audioObj = null;
 
-loadUrlParams();
+window.addEventListener("DOMContentLoaded", (event) => {
+    loadUrlParams();
+});
+
 
 function loadAudioTranscript(){
     let loading = document.getElementById('loading');

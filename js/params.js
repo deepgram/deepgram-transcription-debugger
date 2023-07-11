@@ -61,27 +61,65 @@ function loadUrlParams(){
     };
 
     // Text
-    elms['model'].value = model;
-    elms['tier'].value = tier;
-    elms['language'].value = language;
-    elms['redact'].value = redact;
-    elms['replace'].value = replace;
-    elms['search'].value = search;
-    elms['keywords'].value = keywords;
+    if(model){
+        elms['model'].value = model;
+    }
+    if(tier){
+        elms['tier'].value = tier;
+    }
+    if(language){
+        elms['language'].value = language;
+    }
+    if(redact){
+        elms['redact'].value = redact;
+    }
+    if(replace){
+        elms['replace'].value = replace;
+    }
+    if(search){
+        elms['search'].value = search;
+    }
+    if(keywords){
+        elms['keywords'].value = keywords;
+    }
 
     // Checkboxes
-    elms['multichannel'].checked = multichannel;
-    elms['sentiment'].checked = sentiment;
-    elms['smart_format'].checked = smart_format;
-    elms['punctuate'].checked = punctuate;
-    elms['paragraphs'].checked = paragraphs;
-    elms['utterances'].checked = utterances;
-    elms['numerals'].checked = numerals;
-    elms['profanity_filter'].checked = profanity_filter;
-    elms['diarize'].checked = diarize;
-    elms['summarize'].checked = summarize;
-    elms['detect_topics'].checked = detect_topics;
-    elms['detect_entities'].checked = detect_entities;
+    if(multichannel){
+        elms['multichannel'].checked = multichannel;
+    }
+    if(sentiment){
+        elms['sentiment'].checked = sentiment;
+    }
+    if(smart_format){
+        elms['smart_format'].checked = smart_format;
+    }
+    if(punctuate){
+        elms['punctuate'].checked = punctuate;
+    }
+    if(paragraphs){
+        elms['paragraphs'].checked = paragraphs;
+    }
+    if(utterances){
+        elms['utterances'].checked = utterances;
+    }
+    if(numerals){
+        elms['numerals'].checked = numerals;
+    }
+    if(profanity_filter){
+        elms['profanity_filter'].checked = profanity_filter;
+    }
+    if(diarize){
+        elms['diarize'].checked = diarize;
+    }
+    if(summarize){
+        elms['summarize'].checked = summarize;
+    }
+    if(detect_topics){
+        elms['detect_topics'].checked = detect_topics;
+    }
+    if(detect_entities){
+        elms['detect_entities'].checked = detect_entities;
+    }
 
     loadSettingsToParams();
 }
