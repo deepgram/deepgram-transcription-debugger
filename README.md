@@ -1,5 +1,9 @@
 # deepgram-transcription-debugger
 
+## Live Demo
+
+[Live Demo](https://damiendeepgram.github.io/deepgram-transcription-debugger/)
+
 ## About
 
 This tool is for debugging Deepgram Transcription of Pre-Recorded Audio.
