@@ -195,12 +195,12 @@ function createSentimentWord(word, index){
 
 function createConfidenceWord(word, index){
     let similarityClass = '';
-    if(word.confidence < 0.5){
+    if(word.confidence < 0.25){
         similarityClass = 'error';
     } 
-    else if(word.confidence < 0.75){
+    else if(word.confidence < 0.5){
         similarityClass = 'warning';
-    } else if(word.confidence < 0.95){
+    } else if(word.confidence < 0.75){
         similarityClass = 'info';
     } else {
         similarityClass = '';

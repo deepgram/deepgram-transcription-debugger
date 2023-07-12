@@ -139,15 +139,15 @@ timeline {
 }
 
 .neutral{
-    color: #0f0;
+    background-color: #00ff0044;
 }
 
 .positive{
-    color: #ff0;
+    background-color: #ffff0044;
 }
 
 .negative{
-    color: #f00;
+    background-color: #ff000044;
 }
 
 #speaker_1{
