@@ -28,10 +28,10 @@ app.use(cors())
 app.use(express.static("public/"));
 
 app.post('/upload_files', upload.any('file'), async (req, res) => {
-  console.log('/upload_files');
+  console.log('/upload_files', new Date().toLocaleString());
   let model = req.query.model ? req.query.model : 'nova';
-  let tier = req.query.tier ? req.query.tier : 'tier';
-  let language = req.query.language ? req.query.language : 'language';
+  let tier = req.query.tier ? req.query.tier : '';
+  let language = req.query.language ? req.query.language : '';
   let multichannel = req.query.multichannel ? (req.query.multichannel.toLowerCase() == 'true' ? true : false) : false;
   let sentiment = req.query.sentiment ? (req.query.sentiment.toLowerCase() == 'true' ? true : false) : false;
   
@@ -47,6 +47,7 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
   
   let search = req.query.search ? req.query.search : [];
   let keywords = req.query.keywords ? req.query.keywords : [];
+  let keyword_boost = req.query.keyword_boost ? (req.query.keyword_boost.toLowerCase() == 'true' ? 'legacy' : 'standard') : 'standard';
   let diarize = req.query.diarize ? (req.query.diarize.toLowerCase() == 'true' ? true : false) : false;
   
   let summarize = req.query.summarize ? (req.query.summarize.toLowerCase() == 'true' ? true : false) : false;
@@ -57,6 +58,9 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
   
   if(keywords){
     options.keywords = keywords;
+  }
+  if(keyword_boost){
+    options.keyword_boost = keyword_boost;
   }
   if(redact){
     options.redact = redact;
@@ -139,7 +143,7 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
     };
     const response = await deepgram.transcription.preRecorded(audioSource, options);
     
-    setTimeout(()=>{fs.unlink(req.files[0].path, (evt)=>{console.log('Unlinked: ', evt)})}, 1)
+    setTimeout(()=>{fs.unlink(req.files[0].path, (evt)=>{console.log('Unlinked file ')})}, 1)
     res.send({ message: 'Successfully uploaded files', transcript: response })
   } catch(err){
     console.log(err);
