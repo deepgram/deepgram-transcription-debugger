@@ -58,9 +58,11 @@ function loadAudioTranscript(){
     let detect_topics = document.getElementById('topic_detection').checked;
     let detect_entities = document.getElementById('entity_detection').checked;
 
+    let keyword_boost = document.getElementById('keyword_boost').checked;
+
     loadSettingsToParams();
 
-    let url = `https://deepgram-transcription-debugger.glitch.me/upload_files?model=${model}&tier=${tier}&language=${language}&multichannel=${multichannel}&sentiment=${sentiment}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}${redact}${keywords}${replace}${search}`;
+    let url = `https://deepgram-transcription-debugger.glitch.me/upload_files?model=${model}&tier=${tier}&language=${language}&keyword_boost=${keyword_boost}&multichannel=${multichannel}&sentiment=${sentiment}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}${redact}${keywords}${replace}${search}`;
     fetch(url, {
         method: 'post',
         body: formData,

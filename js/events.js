@@ -68,6 +68,7 @@ document.getElementById("params").addEventListener('change', function(e){
         
             search: document.getElementById('search'),
             keywords: document.getElementById('keywords'),
+            keyword_boost: document.getElementById('keyword_boost'),
             diarize: document.getElementById('diarization'),
             
             summarize: document.getElementById('summarization'),
@@ -90,6 +91,9 @@ document.getElementById("params").addEventListener('change', function(e){
                     elms[key].value += '&' + key +'='+value;
                     queryParams[key] = elms[key].value;
                 }
+            }  else if(key == 'keyword_boost'){
+                elms[key].checked = value == 'legacy' ? true : false;
+                queryParams[key] = elms[key].checked;
             } else if(elms[key]) {
                 elms[key].checked = value == 'true' ? true : false;
                 queryParams[key] = elms[key].checked;

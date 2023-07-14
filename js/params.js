@@ -21,6 +21,7 @@ function loadUrlParams(){
     const keywords = urlParams.get('keywords') ? urlParams.get('keywords') : '';
 
     // Booleans
+    const keyword_boost = urlParams.get('keyword_boost') ? (urlParams.get('keyword_boost') == 'true' ? true : false) : false;
     const multichannel = urlParams.get('multichannel') ? (urlParams.get('multichannel') == 'true' ? true : false) : false;
     const sentiment = urlParams.get('sentiment') ? (urlParams.get('sentiment') == 'true' ? true : false) : false;
     const smart_format = urlParams.get('smart_format') ? (urlParams.get('smart_format') == 'true' ? true : false) : false;
@@ -81,6 +82,9 @@ function loadUrlParams(){
     }
     if(keywords){
         elms['keywords'].value = keywords;
+    }
+    if(keyword_boost){
+        elms['keyword_boost'].value = keyword_boost == 'legacy' ? true : false;
     }
 
     // Checkboxes
@@ -145,6 +149,7 @@ function loadSettingsToParams(){
     
         search: document.getElementById('search'),
         keywords: document.getElementById('keywords'),
+        keyword_boost: document.getElementById('keyword_boost'),
         diarize: document.getElementById('diarization'),
         
         summarize: document.getElementById('summarization'),
