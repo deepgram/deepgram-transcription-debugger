@@ -58,7 +58,7 @@ function loadAudioTranscript(){
     let detect_topics = document.getElementById('topic_detection').checked;
     let detect_entities = document.getElementById('entity_detection').checked;
 
-    let keyword_boost = document.getElementById('keyword_boost').checked;
+    let keyword_boost = document.getElementById('keyword_boost').checked ? 'legacy' : 'standard';
 
     loadSettingsToParams();
 

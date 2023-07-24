@@ -1,10 +1,24 @@
 var wavesurfer = WaveSurfer.create({
     container: '#waveform',
     hideScrollbar: true,
-    waveColor: '#ae29ff',
+    splitChannels: true,
+    splitChannelsOptions: {
+        overlay: false,
+        channelColors: {
+            0: {
+                progressColor: 'green',
+                waveColor: 'pink'
+            },
+            1: {
+                progressColor: 'orange',
+                waveColor: 'purple'
+            }
+        }
+    },
+    // waveColor: '#ae29ff',
     cursorColor: '#f00',
     cursorWidth: 4,
-    progressColor: '#ee028b',
+    // progressColor: '#ee028b',
     backend: 'WebAudio',
     plugins: [
         WaveSurfer.regions.create({}),

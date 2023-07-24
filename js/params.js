@@ -21,7 +21,7 @@ function loadUrlParams(){
     const keywords = urlParams.get('keywords') ? urlParams.get('keywords') : '';
 
     // Booleans
-    const keyword_boost = urlParams.get('keyword_boost') ? (urlParams.get('keyword_boost') == 'true' ? true : false) : false;
+    const keyword_boost = urlParams.get('keyword_boost') ? (urlParams.get('keyword_boost') == 'legacy' ? true : false) : false;
     const multichannel = urlParams.get('multichannel') ? (urlParams.get('multichannel') == 'true' ? true : false) : false;
     const sentiment = urlParams.get('sentiment') ? (urlParams.get('sentiment') == 'true' ? true : false) : false;
     const smart_format = urlParams.get('smart_format') ? (urlParams.get('smart_format') == 'true' ? true : false) : false;
@@ -54,6 +54,7 @@ function loadUrlParams(){
     
         search: document.getElementById('search'),
         keywords: document.getElementById('keywords'),
+        keyword_boost: document.getElementById('keyword_boost'),
         diarize: document.getElementById('diarization'),
         
         summarize: document.getElementById('summarization'),
@@ -83,11 +84,11 @@ function loadUrlParams(){
     if(keywords){
         elms['keywords'].value = keywords;
     }
-    if(keyword_boost){
-        elms['keyword_boost'].value = keyword_boost == 'legacy' ? true : false;
-    }
 
     // Checkboxes
+    if(keyword_boost){
+        elms['keyword_boost'].checked = keyword_boost ;
+    }
     if(multichannel){
         elms['multichannel'].checked = multichannel;
     }
@@ -166,6 +167,8 @@ function loadSettingsToParams(){
             } else {
                 queryParams[key] += '&' + key +'='+elms[key].value;
             }
+        } else if(key == 'keyword_boost'){
+            queryParams[key] = elms[key].checked ? 'legacy' : 'standard';
         } else if(elms[key]) {
             queryParams[key] = elms[key].checked;
         }
