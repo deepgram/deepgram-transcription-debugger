@@ -63,68 +63,28 @@ function loadUrlParams(){
     };
 
     // Text
-    if(model){
-        elms['model'].value = model;
-    }
-    if(tier){
-        elms['tier'].value = tier;
-    }
-    if(language){
-        elms['language'].value = language;
-    }
-    if(redact){
-        elms['redact'].value = redact;
-    }
-    if(replace){
-        elms['replace'].value = replace;
-    }
-    if(search){
-        elms['search'].value = search;
-    }
-    if(keywords){
-        elms['keywords'].value = keywords;
-    }
+    elms['model'].value = model ? model : 'general';
+    elms['tier'].value = tier ? tier : 'nova';
+    elms['language'].value = language ? language : 'en-US';
+    elms['redact'].value = redact ? redact : '';
+    elms['replace'].value = replace ? replace : '';
+    elms['search'].value = search ? search : '';
+    elms['keywords'].value = keywords ? keywords : '';
 
     // Checkboxes
-    if(keyword_boost){
-        elms['keyword_boost'].checked = keyword_boost ;
-    }
-    if(multichannel){
-        elms['multichannel'].checked = multichannel;
-    }
-    if(sentiment){
-        elms['sentiment'].checked = sentiment;
-    }
-    if(smart_format){
-        elms['smart_format'].checked = smart_format;
-    }
-    if(punctuate){
-        elms['punctuate'].checked = punctuate;
-    }
-    if(paragraphs){
-        elms['paragraphs'].checked = paragraphs;
-    }
-    if(utterances){
-        elms['utterances'].checked = utterances;
-    }
-    if(numerals){
-        elms['numerals'].checked = numerals;
-    }
-    if(profanity_filter){
-        elms['profanity_filter'].checked = profanity_filter;
-    }
-    if(diarize){
-        elms['diarize'].checked = diarize;
-    }
-    if(summarize){
-        elms['summarize'].checked = summarize;
-    }
-    if(detect_topics){
-        elms['detect_topics'].checked = detect_topics;
-    }
-    if(detect_entities){
-        elms['detect_entities'].checked = detect_entities;
-    }
+    elms['keyword_boost'].checked = keyword_boost ? keyword_boost : false;
+    elms['multichannel'].checked = multichannel ? multichannel : false;
+    elms['sentiment'].checked = sentiment ? sentiment : false;
+    elms['smart_format'].checked = smart_format ? smart_format : false;
+    elms['punctuate'].checked = punctuate ? punctuate : false;
+    elms['paragraphs'].checked = paragraphs ? paragraphs : false;
+    elms['utterances'].checked = utterances ? utterances : false;
+    elms['numerals'].checked = numerals ? numerals : false;
+    elms['profanity_filter'].checked = profanity_filter ? profanity_filter : false;
+    elms['diarize'].checked = diarize ? diarize : false;
+    elms['summarize'].checked = summarize ? summarize : false;
+    elms['detect_topics'].checked = detect_topics ? detect_topics : false;
+    elms['detect_entities'].checked = detect_entities ? detect_entities : false;
 
     loadSettingsToParams();
 }
