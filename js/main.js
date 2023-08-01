@@ -74,12 +74,16 @@ function loadAudioTranscript(){
         let sentimentHtml = '';
         let confidenceHtml = '';
         let diarizationHtml = '';
+        let summaryHTML = '';
+        let paragraphHTML = '';
         channels.forEach((channel, channelIndex)=>{
             let channelPrefix = (channelIndex != 0 ? '<br><br>' : '') + '<h3>Channel['+channelIndex+']</h3><br>';
             wordHtml += channelPrefix;
             sentimentHtml += channelPrefix;
             confidenceHtml += channelPrefix;
             diarizationHtml += channelPrefix;
+            paragraphHTML += channelPrefix;
+            summaryHTML += channelPrefix;
             transcript = channel.alternatives[0];
             transcript.words.forEach((word, index)=>{
                 wordHtml += createPunctuationWord(word, index);
@@ -116,20 +120,16 @@ function loadAudioTranscript(){
             document.getElementById('diarizationDiv').innerHTML = diarizationHtml;
 
             if(transcript.paragraphs){
-                let paragraphHTML = channelPrefix;
                 let paragraphs = transcript.paragraphs.paragraphs;
                 paragraphs.forEach((paragraph)=>{
                     paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre><hr class="paragraphHR">';
                 })
-                document.getElementById('paragraphsDiv').innerHTML = paragraphHTML;
             }
             if(transcript.summaries){
-                let summaryHTML = channelPrefix;
                 let summaries = transcript.summaries;
                 summaries.forEach((summary)=>{
                     summaryHTML += '<pre>' + summary.summary + '</pre>';
                 })
-                document.getElementById('summaryDiv').innerHTML = summaryHTML;
             }
             /*
             paragraphs.paragraphs
@@ -142,6 +142,8 @@ function loadAudioTranscript(){
 
                 
         })
+        document.getElementById('paragraphsDiv').innerHTML = paragraphHTML;
+        document.getElementById('summaryDiv').innerHTML = summaryHTML;
     })
     .catch((err) => console.log('Error occurred', err))
 }
