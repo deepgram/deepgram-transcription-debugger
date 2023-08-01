@@ -76,6 +76,7 @@ function loadAudioTranscript(){
         let diarizationHtml = '';
         let summaryHTML = '';
         let paragraphHTML = '';
+        let currentIndex = 0
         channels.forEach((channel, channelIndex)=>{
             let channelPrefix = (channelIndex != 0 ? '<br><br>' : '') + '<h3>Channel['+channelIndex+']</h3><br>';
             wordHtml += channelPrefix;
@@ -86,12 +87,12 @@ function loadAudioTranscript(){
             summaryHTML += channelPrefix;
             transcript = channel.alternatives[0];
             transcript.words.forEach((word, index)=>{
-                wordHtml += createPunctuationWord(word, index);
-                sentimentHtml += createSentimentWord(word, index);
-                confidenceHtml += createConfidenceWord(word, index);
-                diarizationHtml += createDiarizationWord(word, index);
+                wordHtml += createPunctuationWord(word, currentIndex);
+                sentimentHtml += createSentimentWord(word, currentIndex);
+                confidenceHtml += createConfidenceWord(word, currentIndex);
+                diarizationHtml += createDiarizationWord(word, currentIndex);
                 wavesurfer.addRegion({
-                    id: 'wavesurfer_region_'+channelIndex+'_'+index,
+                    id: 'wavesurfer_region_'+currentIndex,
                     start: word.start,
                     end: word.end,
                     color: '#38edac44',
@@ -103,7 +104,7 @@ function loadAudioTranscript(){
                 })
 
                 wavesurferOverview.addRegion({
-                    id: 'wavesurferOverview_region_'+channelIndex+'_'+index,
+                    id: 'wavesurferOverview_region_'+currentIndex,
                     start: word.start,
                     end: word.end,
                     color: '#38edac44',
@@ -113,6 +114,7 @@ function loadAudioTranscript(){
                     //     label: word.word
                     //   }
                 })
+                currentIndex++;
             })
             document.getElementById('wordsDiv').innerHTML = wordHtml;
             document.getElementById('sentimentDiv').innerHTML = sentimentHtml;
