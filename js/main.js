@@ -69,69 +69,79 @@ function loadAudioTranscript(){
     })
     .then(response => response.json())
     .then((res) => {
-        transcript = res.transcript.results.channels[0].alternatives[0];
+        let channels = res.transcript.results.channels;
         let wordHtml = '';
         let sentimentHtml = '';
         let confidenceHtml = '';
         let diarizationHtml = '';
-        transcript.words.forEach((word, index)=>{
-            wordHtml += createPunctuationWord(word, index);
-            sentimentHtml += createSentimentWord(word, index);
-            confidenceHtml += createConfidenceWord(word, index);
-            diarizationHtml += createDiarizationWord(word, index);
-            wavesurfer.addRegion({
-                id: 'wavesurfer_region_'+index,
-                start: word.start,
-                end: word.end,
-                color: '#38edac44',
-                drag: false,
-                resize: false,
-                attributes: {
-                    label: word.word
-                  }
-            })
+        channels.forEach((channel, channelIndex)=>{
+            let channelPrefix = (channelIndex != 0 ? '<br><br>' : '') + '<h3>Channel['+channelIndex+']</h3><br>';
+            wordHtml += channelPrefix;
+            sentimentHtml += channelPrefix;
+            confidenceHtml += channelPrefix;
+            diarizationHtml += channelPrefix;
+            transcript = channel.alternatives[0];
+            transcript.words.forEach((word, index)=>{
+                wordHtml += createPunctuationWord(word, index);
+                sentimentHtml += createSentimentWord(word, index);
+                confidenceHtml += createConfidenceWord(word, index);
+                diarizationHtml += createDiarizationWord(word, index);
+                wavesurfer.addRegion({
+                    id: 'wavesurfer_region_'+channelIndex+'_'+index,
+                    start: word.start,
+                    end: word.end,
+                    color: '#38edac44',
+                    drag: false,
+                    resize: false,
+                    attributes: {
+                        label: word.word
+                    }
+                })
 
-            wavesurferOverview.addRegion({
-                id: 'wavesurferOverview_region_'+index,
-                start: word.start,
-                end: word.end,
-                color: '#38edac44',
-                drag: false,
-                resize: false,
-                // attributes: {
-                //     label: word.word
-                //   }
+                wavesurferOverview.addRegion({
+                    id: 'wavesurferOverview_region_'+channelIndex+'_'+index,
+                    start: word.start,
+                    end: word.end,
+                    color: '#38edac44',
+                    drag: false,
+                    resize: false,
+                    // attributes: {
+                    //     label: word.word
+                    //   }
+                })
             })
+            document.getElementById('wordsDiv').innerHTML = wordHtml;
+            document.getElementById('sentimentDiv').innerHTML = sentimentHtml;
+            document.getElementById('confidenceDiv').innerHTML = confidenceHtml;
+            document.getElementById('diarizationDiv').innerHTML = diarizationHtml;
+
+            if(transcript.paragraphs){
+                let paragraphHTML = channelPrefix;
+                let paragraphs = transcript.paragraphs.paragraphs;
+                paragraphs.forEach((paragraph)=>{
+                    paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre><hr class="paragraphHR">';
+                })
+                document.getElementById('paragraphsDiv').innerHTML = paragraphHTML;
+            }
+            if(transcript.summaries){
+                let summaryHTML = channelPrefix;
+                let summaries = transcript.summaries;
+                summaries.forEach((summary)=>{
+                    summaryHTML += '<pre>' + summary.summary + '</pre>';
+                })
+                document.getElementById('summaryDiv').innerHTML = summaryHTML;
+            }
+            /*
+            paragraphs.paragraphs
+                end:10.074161
+                num_words:11
+                sentences:[{text: "Hi.", start: 6.63668, end: 6.8365803},…]
+                start:6.63668
+                */
+            loading.style.display = 'none';
+
+                
         })
-        document.getElementById('wordsDiv').innerHTML = wordHtml;
-        document.getElementById('sentimentDiv').innerHTML = sentimentHtml;
-        document.getElementById('confidenceDiv').innerHTML = confidenceHtml;
-        document.getElementById('diarizationDiv').innerHTML = diarizationHtml;
-
-        if(transcript.paragraphs){
-            let paragraphHTML = '';
-            let paragraphs = transcript.paragraphs.paragraphs;
-            paragraphs.forEach((paragraph)=>{
-                paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre><hr class="paragraphHR">';
-            })
-            document.getElementById('paragraphsDiv').innerHTML = paragraphHTML;
-        }
-        if(transcript.summaries){
-            let summaryHTML = '';
-            let summaries = transcript.summaries;
-            summaries.forEach((summary)=>{
-                summaryHTML += '<pre>' + summary.summary + '</pre>';
-            })
-            document.getElementById('summaryDiv').innerHTML = summaryHTML;
-        }
-        /*
-        paragraphs.paragraphs
-            end:10.074161
-            num_words:11
-            sentences:[{text: "Hi.", start: 6.63668, end: 6.8365803},…]
-            start:6.63668
-            */
-        loading.style.display = 'none';
     })
     .catch((err) => console.log('Error occurred', err))
 }
