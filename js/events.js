@@ -1,4 +1,4 @@
-
+let audio2 = null;
 document.getElementById("fileinput").addEventListener('change', function(e){
     var file = this.files[0];
 
@@ -8,8 +8,27 @@ document.getElementById("fileinput").addEventListener('change', function(e){
         reader.onload = function (evt) {
             var blob = new window.Blob([new Uint8Array(evt.target.result)]);
             audio = new Audio();
+            audio.controls = false
             audio.src = URL.createObjectURL(blob);
+
+            loadOverview(audio);
+            loadWords(audio);
+
+            audio2 = new Audio();
+            audio2.id = 'audio2';
+            audio2.controls = true
+            audio2.src = URL.createObjectURL(blob);
+            let uiContainer = document.getElementById('ui-container');
+            uiContainer.appendChild(audio2);
             
+            audio2.onplay = function(){
+                window.cancelAnimationFrame(animationID);
+                demo.render();
+            }
+            audio2.onpause = function(){
+                window.cancelAnimationFrame(animationID);
+            }
+
             wavesurfer.load(audio.src);
             wavesurferOverview.load(audio.src);
             let controls = document.getElementById('controls');

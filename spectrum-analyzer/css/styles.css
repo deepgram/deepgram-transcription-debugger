@@ -1,0 +1,54 @@
+canvas {
+    position: absolute;
+    /*background: black;*/
+/*     width: 500px;
+    height: 500px;*/
+    left: 49px;
+  }
+
+#canvas{
+   background: black;
+}
+
+#demo{
+    height:540px;
+    max-height: 540px;
+}
+
+.demo audio{
+    width: 100%;
+}
+#stats{
+    text-align: left;
+}
+/*
+#info{
+    font-size: 12px;
+}
+#score{
+    font-size: 12px;
+} */
+#ui-container, .sidebar {
+    /* float: right; */
+    width: 320px;
+
+    overflow: hidden;
+}
+.clearfix:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.rightStats{
+    float: left;
+    width:200px;
+}
+.leftSpectrum{
+    float: left;
+    width: calc(100% - 200px);
+}
+
+#spectrumTab{
+    min-height: 570px;
+}

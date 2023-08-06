@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="./css/styles.css">
+    </head>
+<body>
+    <div class="wrapper">
+        <div id="demo" class="" style="max-height: 549px;">
+            <canvas id="canvas" width="820" height="549"></canvas>
+            <canvas id="labels" width="820" height="549"></canvas>
+            <canvas id="canvas-log"></canvas>
+        </div>
+
+        <div class="clearfix" id="ui-container">
+            <div class="audio-file-wrapper interface clearfix">
+                <label>Upload your own</label>
+                <input id="audio-file" type="file">
+            </div>
+        </div>
+        <div class="clearfix" id="ui-container">
+            <div class="interface clearfix">
+                <label>Audio Score: <span id="total">x</span></label>
+                <pre id="score"></pre>
+            </div>
+        </div>
+        <div class="clearfix" id="ui-container">
+            <div class="interface clearfix">
+                <label>Audio Info:</label>
+                <!-- <input type="button" value="Load Info" onclick="loadInfo()"> -->
+                <pre id="info"></pre>
+            </div>
+        </div>
+        <div class="clearfix" id="ui-container">
+            <div class="interface clearfix">
+                <label>Quality Stats:</label>
+                <pre id="stats"></pre>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="./js/BufferLoader.js"></script>
+    <script src="./js/ui-tools.js"></script>
+    <script src="./js/demo.js"></script>
+</body>

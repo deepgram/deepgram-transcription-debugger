@@ -11,7 +11,9 @@
         <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.regions.min.js"></script>
         <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.timeline.min.js"></script>
         <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.cursor.min.js"></script>
+
         <link rel="stylesheet" href="./css/styles.css?v=0.3">
+        <link rel="stylesheet" href="./spectrum-analyzer/css/styles.css">
     </head>
 <body>
     <div class="container">
@@ -173,6 +175,7 @@
                 <li class=""><a href="#confidenceTab">Confidence</a></li>
                 <li class=""><a href="#diarizationTab">Diarization</a></li>
                 <li class=""><a href="#sentimentTab">Senitment</a></li>
+                <li class=""><a href="#spectrumTab" onclick="loadSpectrumCanvas()">Spectrum</a></li>
             </ul>
             <div class="tab-content">
                 <div id="paragraphsTab" class="tab-pane active">
@@ -199,9 +202,41 @@
                     <div class="infoDiv">White = Detected Word / <span class="green">Green = Confidence</span></div>
                     <div id="confidenceDiv" class="results"></div>
                 </div>
+
+                <!-- SPECTRUM -->
+                <div id="spectrumTab" class="tab-pane" >
+                    <div class="wrapper">
+                        <div style="display: block;margin-left: calc(50% - 160px);" id="ui-container">
+                            <div class="audio-file-wrapper interface clearfix" style="display: none;">
+                                <label>Upload your own</label>
+                                <input id="audio-file" type="file">
+                            </div>
+                        </div>
+                        <div>
+                            <div id="demo" class="leftSpectrum" style="max-height: 549px;min-height: 549px;">
+                                <canvas id="canvas" width="820" height="549"></canvas>
+                                <canvas id="labels" width="820" height="549"></canvas>
+                                <canvas id="canvas-log"></canvas>
+                            </div>
+                            <div class="rightStats" id="">
+                                <div class="interface clearfix">
+                                    <label>Quality Stats:</label>
+                                    <pre id="stats"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- SPECTRUM END -->
             </div>
         </section>
     </div>
+
+    <script src="./spectrum-analyzer/js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="./spectrum-analyzer/js/BufferLoader.js"></script>
+    <script src="./spectrum-analyzer/js/ui-tools.js"></script>
+    <script src="./spectrum-analyzer/js/demo.js"></script>
+
     <script type="text/javascript" src="./js/utils.js?v=0.3"></script>
     <script type="text/javascript" src="./js/params.js?v=0.3"></script>
     <script type="text/javascript" src="./js/tabs.js?v=0.3"></script>
