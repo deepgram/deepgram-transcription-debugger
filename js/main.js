@@ -3,7 +3,7 @@ let overviewRegionKey = 'overviewRegion';
 let playTimeout = null;
 let playing = false;
 let dragging = false;
-let transcript = null;
+let transcripts = [];
 let audioObj = null;
 
 window.addEventListener("DOMContentLoaded", (event) => {
@@ -85,14 +85,14 @@ function loadAudioTranscript(){
             diarizationHtml += channelPrefix;
             paragraphHTML += channelPrefix;
             summaryHTML += channelPrefix;
-            transcript = channel.alternatives[0];
-            transcript.words.forEach((word, index)=>{
-                wordHtml += createPunctuationWord(word, currentIndex);
-                sentimentHtml += createSentimentWord(word, currentIndex);
-                confidenceHtml += createConfidenceWord(word, currentIndex);
-                diarizationHtml += createDiarizationWord(word, currentIndex);
+            transcripts.push(channel.alternatives[0]);
+            channel.alternatives[0].words.forEach((word, index)=>{
+                wordHtml += createPunctuationWord(word, channelIndex, index);
+                sentimentHtml += createSentimentWord(word, channelIndex, index);
+                confidenceHtml += createConfidenceWord(word, channelIndex, index);
+                diarizationHtml += createDiarizationWord(word, channelIndex, index);
                 wavesurfer.addRegion({
-                    id: 'wavesurfer_region_'+currentIndex,
+                    id: 'wavesurfer_region_'+channelIndex + '_' + index,
                     start: word.start,
                     end: word.end,
                     color: '#38edac44',
@@ -104,7 +104,7 @@ function loadAudioTranscript(){
                 })
 
                 wavesurferOverview.addRegion({
-                    id: 'wavesurferOverview_region_'+currentIndex,
+                    id: 'wavesurferOverview_region_'+channelIndex + '_' + index,
                     start: word.start,
                     end: word.end,
                     color: '#38edac44',
@@ -121,14 +121,14 @@ function loadAudioTranscript(){
             document.getElementById('confidenceDiv').innerHTML = confidenceHtml;
             document.getElementById('diarizationDiv').innerHTML = diarizationHtml;
 
-            if(transcript.paragraphs){
-                let paragraphs = transcript.paragraphs.paragraphs;
+            if(channel.alternatives[0].paragraphs){
+                let paragraphs = channel.alternatives[0].paragraphs.paragraphs;
                 paragraphs.forEach((paragraph)=>{
                     paragraphHTML += '<pre>' + paragraph.sentences.map((p)=>p.text).join(' ') + '</pre><hr class="paragraphHR">';
                 })
             }
-            if(transcript.summaries){
-                let summaries = transcript.summaries;
+            if(channel.alternatives[0].summaries){
+                let summaries = channel.alternatives[0].summaries;
                 summaries.forEach((summary)=>{
                     summaryHTML += '<pre>' + summary.summary + '</pre>';
                 })
@@ -150,7 +150,7 @@ function loadAudioTranscript(){
     .catch((err) => console.log('Error occurred', err))
 }
 
-function createPunctuationWord(word, index){
+function createPunctuationWord(word, channelIndex, index){
     let similar = 1;
     let words_val = '';
     
@@ -187,7 +187,7 @@ function createPunctuationWord(word, index){
     if(similar < similarityThreshold){
         similarityClass = 'warning';
     }
-    let html = `<div class="wordDiv ${similarityClass}" id="words_div_${index}" onclick="jumpToWord(${index})">
+    let html = `<div class="wordDiv ${similarityClass}" id="words_div_${channelIndex}_${index}" onclick="jumpToWord(${channelIndex}, ${index})">
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(words_val){
@@ -198,8 +198,8 @@ function createPunctuationWord(word, index){
     return html;
 }
 
-function createSentimentWord(word, index){
-    let html = `<div class="wordDiv ${word.sentiment}" id="sentiment_div_${index}" onclick="jumpToWord(${index})">
+function createSentimentWord(word, channelIndex, index){
+    let html = `<div class="wordDiv ${word.sentiment}" id="sentiment_div_${channelIndex}_${index}" onclick="jumpToWord(${channelIndex}, ${index})">
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(word.sentiment){
@@ -209,7 +209,7 @@ function createSentimentWord(word, index){
     return html;
 }
 
-function createConfidenceWord(word, index){
+function createConfidenceWord(word, channelIndex, index){
     let similarityClass = '';
     if(word.confidence < 0.25){
         similarityClass = 'error';
@@ -222,7 +222,7 @@ function createConfidenceWord(word, index){
         similarityClass = '';
     }
 
-    let html = `<div class="wordDiv ${similarityClass}" id="confidence_div_${index}" onclick="jumpToWord(${index})">
+    let html = `<div class="wordDiv ${similarityClass}" id="confidence_div_${channelIndex}_${index}" onclick="jumpToWord(${channelIndex}, ${index})">
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(word.confidence){
@@ -232,8 +232,8 @@ function createConfidenceWord(word, index){
     return html;
 }
 
-function createDiarizationWord(word, index){
-    let html = `<div class="wordDiv speaker_${word.speaker}" id="speaker_div_${index}" onclick="jumpToWord(${index})">
+function createDiarizationWord(word, channelIndex, index){
+    let html = `<div class="wordDiv speaker_${word.speaker}" id="speaker_div_${channelIndex}_${index}" onclick="jumpToWord(${channelIndex}, ${index})">
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(word.speaker !== null){
@@ -243,14 +243,14 @@ function createDiarizationWord(word, index){
     return html;
 }
 
-// function createWord(word, index){
+// function createWord(word, channelIndex, index){
 //     let sentiment_val = '';
 //     if(word.sentiment){
 //         sentiment_val = word.sentiment;
 //     }
 
 //     // Sentiment
-//     let sentimentHTML = `<div class="wordDiv ${similarityClass}" id="word_div_${index}" onclick="jumpToWord(${index})">
+//     let sentimentHTML = `<div class="wordDiv ${similarityClass}" id="word_div_${channelIndex}_${index}" onclick="jumpToWord(${channelIndex}, ${index})">
 //         <span class="word" id="word_${index}">${word.word}</span>
 //         <br>`;
 //     if(sentiment_val){
@@ -260,12 +260,12 @@ function createDiarizationWord(word, index){
 //     return sentimentHTML;
 // }
 
-function jumpToWord(index){
-    let word = transcript.words[index];
+function jumpToWord(channelIndex, index){
+    let word = transcripts[channelIndex].words[index];
     let progress = word.start / wavesurfer.backend.getDuration();
     wavesurfer.drawer.recenter(progress);
     // wavesurfer.play(word.start);
-    let region = wavesurfer.regions.list['wavesurfer_region_'+index]
+    let region = wavesurfer.regions.list['wavesurfer_region_'+channelIndex + '_' +index]
     region.play();
     let button = document.getElementById('play');
     button.classList.add('pressed');
@@ -331,15 +331,17 @@ function linkTimelines(){
         if(!dragging){
             wavesurferOverview.regions.list[overviewRegionKey].update({ start: currentTime, end: currentTime+5 });
             ['words', 'sentiment', 'confidence', 'speaker'].forEach((key)=>{
-                transcript.words.forEach((word, index)=>{
-                    let div = document.getElementById(key+'_div_'+index);
-                    if(currentTime > word.start && currentTime < word.end){
-                        div.style.border = '1px solid #ee028b';
-                    } else {
-                        div.style.border = '1px solid transparent';
-                        div.style.display = 'inline-block';
-                    }
-                });
+                transcripts.forEach((transcript, channelIndex)=>{
+                    transcript.words.forEach((word, index)=>{
+                        let div = document.getElementById(key+'_div_'+channelIndex+'_'+index);
+                        if(currentTime > word.start && currentTime < word.end){
+                            div.style.border = '1px solid #ee028b';
+                        } else {
+                            div.style.border = '1px solid transparent';
+                            div.style.display = 'inline-block';
+                        }
+                    });
+                })
             })
         }
     })
