@@ -157,6 +157,8 @@ document.getElementById('update').addEventListener('click', () => {
         alert('You need to select an audio file first to load these settings.');
         return;
     }
+    wavesurfer.clearRegions();
+    wavesurferOverview.clearRegions();
     loadAudioTranscript();
     document.getElementById('channelsDiv').innerHTML = '';
     document.getElementById('wordsDiv').innerHTML = '';
