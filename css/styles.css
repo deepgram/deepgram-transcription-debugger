@@ -402,3 +402,12 @@ a{
     border: solid 1px #484848;
     border-bottom: none;
 }
+
+.unhighlighted{
+    border: 1px solid transparent;
+}
+
+.highlighted{
+    border: 1px solid #ee028b;
+    display: inline-block;
+}

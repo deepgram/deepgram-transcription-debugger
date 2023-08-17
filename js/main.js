@@ -371,21 +371,23 @@ function linkTimelines(){
         }
     });
     
+    let highlightedDivs = {};
 
     wavesurfer.on('audioprocess', (currentTime)=>{
         playing = true;
         if(!dragging){
             wavesurferOverview.regions.list[overviewRegionKey].update({ start: currentTime, end: currentTime+5 });
             ['channel', 'words', 'sentiment', 'confidence', 'speaker'].forEach((key)=>{
+                if(highlightedDivs[key]){
+                    highlightedDivs[key].classList.remove('highlighted');
+                }
                 transcripts.forEach((transcript, channelIndex)=>{
                     transcript.words.forEach((word, index)=>{
                         let div = document.getElementById(key+'_div_'+channelIndex+'_'+index);
                         if(currentTime > word.start && currentTime < word.end){
-                            div.style.border = '1px solid #ee028b';
-                        } else {
-                            div.style.border = '1px solid transparent';
-                            div.style.display = 'inline-block';
-                        }
+                            div.classList.add('highlighted');
+                            highlightedDivs[key] = div;
+                        } 
                     });
                 })
             })

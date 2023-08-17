@@ -159,6 +159,8 @@ document.getElementById('update').addEventListener('click', () => {
     }
     wavesurfer.clearRegions();
     wavesurferOverview.clearRegions();
+    transcripts = [];
+    linkTimelines();
     loadAudioTranscript();
     document.getElementById('channelsDiv').innerHTML = '';
     document.getElementById('wordsDiv').innerHTML = '';
