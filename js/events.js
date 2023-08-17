@@ -158,6 +158,7 @@ document.getElementById('update').addEventListener('click', () => {
         return;
     }
     loadAudioTranscript();
+    document.getElementById('channelsDiv').innerHTML = '';
     document.getElementById('wordsDiv').innerHTML = '';
     document.getElementById('paragraphsDiv').innerHTML = '';
     document.getElementById('summaryDiv').innerHTML = '';
