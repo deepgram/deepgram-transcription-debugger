@@ -150,43 +150,43 @@ timeline {
     background-color: #ff000044;
 }
 
-#speaker_1{
-    color: #f00;
+.speaker_1{
+    color: #F88;
 }
 
-#speaker_2{
-    color: #0f0;
+.speaker_2{
+    color: #8f8;
 }
 
-#speaker_3{
-    color: #00f;
+.speaker_3{
+    color: #88f;
 }
 
-#speaker_4{
-    color: #ff0;
+.speaker_4{
+    color: #ff8;
 }
 
-#speaker_5{
-    color: #f0f;
+.speaker_5{
+    color: #f8f;
 }
 
-#speaker_6{
+.speaker_6{
     color: #0ff;
 }
 
-#speaker_7{
+.speaker_7{
     color: #f80;
 }
 
-#speaker_8{
+.speaker_8{
     color: #08f;
 }
 
-#speaker_9{
+.speaker_9{
     color: #f08;
 }
 
-#speaker_10{
+.speaker_10{
     color: #80f;
 }
 

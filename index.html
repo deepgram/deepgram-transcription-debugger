@@ -12,8 +12,8 @@
         <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.timeline.min.js"></script>
         <script src="https://unpkg.com/wavesurfer.js@6.0.0/dist/plugin/wavesurfer.cursor.min.js"></script>
 
-        <link rel="stylesheet" href="./css/styles.css?v=0.5">
-        <link rel="stylesheet" href="./spectrum-analyzer/css/styles.css?v=0.5">
+        <link rel="stylesheet" href="./css/styles.css?v=0.6">
+        <link rel="stylesheet" href="./spectrum-analyzer/css/styles.css?v=0.6">
     </head>
 <body>
     <div class="container">
@@ -169,7 +169,8 @@
     <div class="container--tabs">
         <section class="row">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#paragraphsTab">Paragraphs</a></li>
+                <li class="active"><a href="#channelsTab">Channels</a></li>
+                <li class=""><a href="#paragraphsTab">Paragraphs</a></li>
                 <li class=""><a href="#summaryTab">Summary</a></li>
                 <li class=""><a href="#wordTab">Punctuation</a></li>
                 <li class=""><a href="#confidenceTab">Confidence</a></li>
@@ -179,7 +180,11 @@
                 <li class=""><a href="#recorderTab" >Record Audio</a></li>
             </ul>
             <div class="tab-content">
-                <div id="paragraphsTab" class="tab-pane active">
+                <div id="channelsTab" class="tab-pane active">
+                    <div class="infoDiv">Detected Channels:</div>
+                    <div id="channelsDiv" class="results"></div>
+                </div>
+                <div id="paragraphsTab" class="tab-pane">
                     <div class="infoDiv">Detected Paragraphs:</div>
                     <div id="paragraphsDiv" class="results"></div>
                 </div>
@@ -241,22 +246,22 @@
         </section>
     </div>
 
-    <script src="./spectrum-analyzer/js/jquery-2.0.0.min.js?v=0.5"></script>
-    <script type="text/javascript" src="./spectrum-analyzer/js/BufferLoader.js?v=0.5"></script>
-    <script src="./spectrum-analyzer/js/ui-tools.js?v=0.5"></script>
-    <script src="./spectrum-analyzer/js/demo.js?v=0.5"></script>
+    <script src="./spectrum-analyzer/js/jquery-2.0.0.min.js?v=0.6"></script>
+    <script type="text/javascript" src="./spectrum-analyzer/js/BufferLoader.js?v=0.6"></script>
+    <script src="./spectrum-analyzer/js/ui-tools.js?v=0.6"></script>
+    <script src="./spectrum-analyzer/js/demo.js?v=0.6"></script>
 
-    <script type="text/javascript" src="./js/recorder.js?v=0.5"></script>
+    <script type="text/javascript" src="./js/recorder.js?v=0.6"></script>
 
-    <script type="text/javascript" src="./js/utils.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/params.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/tabs.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/dropzone.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/timeline.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/cursor.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/overview.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/words.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/main.js?v=0.5"></script>
-    <script type="text/javascript" src="./js/events.js?v=0.5"></script>
+    <script type="text/javascript" src="./js/utils.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/params.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/tabs.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/dropzone.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/timeline.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/cursor.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/overview.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/words.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/main.js?v=0.6"></script>
+    <script type="text/javascript" src="./js/events.js?v=0.6"></script>
 </body>
 </html>

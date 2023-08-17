@@ -70,6 +70,7 @@ function loadAudioTranscript(){
     .then(response => response.json())
     .then((res) => {
         let channels = res.transcript.results.channels;
+        let channelsHtml = '';
         let wordHtml = '';
         let sentimentHtml = '';
         let confidenceHtml = '';
@@ -77,6 +78,37 @@ function loadAudioTranscript(){
         let summaryHTML = '';
         let paragraphHTML = '';
         let currentIndex = 0
+
+        let allWords = [];
+        //get all the words with channel and original index metadata
+        channels.forEach((channel, channelIndex)=>{
+            channel.alternatives[0].words.forEach((word, index)=>{
+                word.channel = channelIndex;
+                word.originalIndex = index;
+                allWords.push(word);
+            });
+        });
+        // sort the words by time order
+        allWords.sort((a,b)=>(a.start > b.start) ? 1 : -1);
+
+        let currentChannelWords = [];
+        let currentChannel = -1;
+        allWords.forEach((word)=>{
+            if(currentChannel == -1 || currentChannel != word.channel){
+                if(currentChannelWords.length > 0){
+                    channelsHtml += createChannelWords(currentChannelWords);
+                }
+                currentChannel = word.channel;
+                currentChannelWords = [];
+            }
+            currentChannelWords.push(word);
+        })
+        // Process the last words
+        channelsHtml += createChannelWords(currentChannelWords);
+
+        document.getElementById('channelsDiv').innerHTML = channelsHtml;
+
+        
         channels.forEach((channel, channelIndex)=>{
             let channelPrefix = (channelIndex != 0 ? '<br><br>' : '') + '<h3>Channel['+channelIndex+']</h3><br>';
             wordHtml += channelPrefix;
@@ -148,6 +180,20 @@ function loadAudioTranscript(){
         document.getElementById('summaryDiv').innerHTML = summaryHTML;
     })
     .catch((err) => console.log('Error occurred', err))
+}
+
+function createChannelWords(channelWords){
+    let channelsHtml = '';
+    channelWords.forEach((channelWord, idx)=>{
+        if(idx == 0){
+            channelsHtml += '<div class="speaker_'+(channelWord.channel+1)+'"><b class="color">Channel '+channelWord.channel+':</b><br>';
+        }
+        channelsHtml += `<div class="wordDiv" id="channel_div_${channelWord.channel}_${channelWord.originalIndex}" onclick="jumpToWord(${channelWord.channel}, ${channelWord.originalIndex})">
+            <span class="word" id="word_${channelWord.originalIndex}">${channelWord.word}</span>
+            </div>`;
+    })
+    channelsHtml += '</div><br>';
+    return channelsHtml;
 }
 
 function createPunctuationWord(word, channelIndex, index){
@@ -237,7 +283,7 @@ function createDiarizationWord(word, channelIndex, index){
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(word.speaker !== null){
-        html += `<span class="punctuation" id="speaker_${word.speaker}">#${word.speaker}</span>`
+        html += `<span class="punctuation" id="speaker_${word.speaker}" class="speaker_${word.speaker}">#${word.speaker}</span>`
     }
     html += `</div>`;
     return html;
@@ -330,7 +376,7 @@ function linkTimelines(){
         playing = true;
         if(!dragging){
             wavesurferOverview.regions.list[overviewRegionKey].update({ start: currentTime, end: currentTime+5 });
-            ['words', 'sentiment', 'confidence', 'speaker'].forEach((key)=>{
+            ['channel', 'words', 'sentiment', 'confidence', 'speaker'].forEach((key)=>{
                 transcripts.forEach((transcript, channelIndex)=>{
                     transcript.words.forEach((word, index)=>{
                         let div = document.getElementById(key+'_div_'+channelIndex+'_'+index);
