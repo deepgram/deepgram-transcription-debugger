@@ -189,7 +189,7 @@ function createChannelWords(channelWords){
             channelsHtml += '<div class="speaker_'+(channelWord.channel+1)+'"><b class="color">Channel '+channelWord.channel+':</b><br>';
         }
         channelsHtml += `<div class="wordDiv" id="channel_div_${channelWord.channel}_${channelWord.originalIndex}" onclick="jumpToWord(${channelWord.channel}, ${channelWord.originalIndex})">
-            <span class="word" id="word_${channelWord.originalIndex}">${channelWord.word}</span>
+            <span class="word" style="margin-right: 0px;" id="word_${channelWord.originalIndex}">${channelWord.word}&nbsp;</span>
             </div>`;
     })
     channelsHtml += '</div><br>';
