@@ -283,7 +283,7 @@ function createDiarizationWord(word, channelIndex, index){
         <span class="word" id="word_${index}">${word.word}</span>
         <br>`;
     if(word.speaker !== null){
-        html += `<span class="punctuation" id="speaker_${word.speaker}" class="speaker_${word.speaker}">#${word.speaker}</span>`
+        html += `<span id="speaker_${word.speaker}" class="punctuation speaker_${word.speaker}">#${word.speaker}</span>`
     }
     html += `</div>`;
     return html;
