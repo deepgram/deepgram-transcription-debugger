@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-[Live Demo](https://damiendeepgram.github.io/deepgram-transcription-debugger/)
+[Live Demo](https://deepgram.github.io/deepgram-transcription-debugger/)
 
 ## About
 
