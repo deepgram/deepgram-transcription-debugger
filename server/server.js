@@ -49,6 +49,7 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
   let keywords = req.query.keywords ? req.query.keywords : [];
   let keyword_boost = req.query.keyword_boost ? (req.query.keyword_boost.toLowerCase() == 'true' ? 'legacy' : 'standard') : 'standard';
   let diarize = req.query.diarize ? (req.query.diarize.toLowerCase() == 'true' ? true : false) : false;
+  let filler_words = req.query.filler_words ? (req.query.filler_words.toLowerCase() == 'true' ? true : false) : false;
   
   let summarize = req.query.summarize ? (req.query.summarize.toLowerCase() == 'true' ? true : false) : false;
   let detect_topics = req.query.detect_topics ? (req.query.detect_topics.toLowerCase() == 'true' ? true : false) : false;
@@ -104,6 +105,9 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
   if(diarize){
     options.diarize = diarize;
   }
+  if(filler_words){
+    options.filler_words = filler_words;
+  }
   if(summarize){
     options.summarize = summarize;
   }
@@ -127,6 +131,8 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
   
   console.log('numerals', numerals);
   console.log('profanity_filter', profanity_filter);
+  console.log('filler_words', filler_words);
+
   console.log('diarize', diarize);
   
   console.log('summarize', summarize);

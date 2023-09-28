@@ -89,6 +89,7 @@ document.getElementById("params").addEventListener('change', function(e){
             keywords: document.getElementById('keywords'),
             keyword_boost: document.getElementById('keyword_boost'),
             diarize: document.getElementById('diarization'),
+            filler_words: document.getElementById('filler_words'),
             
             summarize: document.getElementById('summarization'),
             detect_topics: document.getElementById('topic_detection'),

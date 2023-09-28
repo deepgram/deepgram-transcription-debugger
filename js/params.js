@@ -34,6 +34,7 @@ function loadUrlParams(){
     const summarize = urlParams.get('summarize') ? (urlParams.get('summarize') == 'true' ? true : false) : false;
     const detect_topics = urlParams.get('detect_topics') ? (urlParams.get('detect_topics') == 'true' ? true : false) : false;
     const detect_entities = urlParams.get('detect_entities') ? (urlParams.get('detect_entities') == 'true' ? true : false) : false;
+    const filler_words = urlParams.get('filler_words') ? (urlParams.get('filler_words') == 'true' ? true : false) : false;
 
     let elms = {
         model: document.getElementById('model'),
@@ -56,6 +57,7 @@ function loadUrlParams(){
         keywords: document.getElementById('keywords'),
         keyword_boost: document.getElementById('keyword_boost'),
         diarize: document.getElementById('diarization'),
+        filler_words: document.getElementById('filler_words'),
         
         summarize: document.getElementById('summarization'),
         detect_topics: document.getElementById('topic_detection'),
@@ -85,6 +87,7 @@ function loadUrlParams(){
     elms['summarize'].checked = summarize ? summarize : false;
     elms['detect_topics'].checked = detect_topics ? detect_topics : false;
     elms['detect_entities'].checked = detect_entities ? detect_entities : false;
+    elms['filler_words'].checked = filler_words ? filler_words : false;
 
     loadSettingsToParams();
 }
@@ -112,6 +115,7 @@ function loadSettingsToParams(){
         keywords: document.getElementById('keywords'),
         keyword_boost: document.getElementById('keyword_boost'),
         diarize: document.getElementById('diarization'),
+        filler_words: document.getElementById('filler_words'),
         
         summarize: document.getElementById('summarization'),
         detect_topics: document.getElementById('topic_detection'),

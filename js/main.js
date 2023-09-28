@@ -53,6 +53,7 @@ function loadAudioTranscript(){
         keywords = '&' + keywords;
     }
     let diarize = document.getElementById('diarization').checked;
+    let filler_words = document.getElementById('filler_words').checked;
     
     let summarize = document.getElementById('summarization').checked;
     let detect_topics = document.getElementById('topic_detection').checked;
@@ -62,7 +63,7 @@ function loadAudioTranscript(){
 
     loadSettingsToParams();
 
-    let url = `https://deepgram-transcription-debugger.glitch.me/upload_files?model=${model}&tier=${tier}&language=${language}&keyword_boost=${keyword_boost}&multichannel=${multichannel}&sentiment=${sentiment}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&detect_entities=${detect_entities}${redact}${keywords}${replace}${search}`;
+    let url = `https://deepgram-transcription-debugger.glitch.me/upload_files?model=${model}&tier=${tier}&language=${language}&keyword_boost=${keyword_boost}&multichannel=${multichannel}&sentiment=${sentiment}&smart_format=${smart_format}&punctuate=${punctuate}&paragraphs=${paragraphs}&utterances=${utterances}&numerals=${numerals}&profanity_filter=${profanity_filter}&diarize=${diarize}&summarize=${summarize}&detect_topics=${detect_topics}&filler_words=${filler_words}&detect_entities=${detect_entities}${redact}${keywords}${replace}${search}`;
     fetch(url, {
         method: 'post',
         body: formData,
