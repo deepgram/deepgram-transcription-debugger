@@ -23,3 +23,15 @@ Any differences of interest will be highlighted. eg. Punctuation is vastly diffe
 ## Deep Linking
 
 You can copy the link and share it with others to preload the UI to help reproduce issues. (No audio is being stored so you would also need to share the Audio to reproduce the issue)
+
+
+## Server
+
+This is the backend for the app
+
+### Running
+
+```
+npm i
+npm run start
+```
