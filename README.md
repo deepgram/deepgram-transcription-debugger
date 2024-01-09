@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-[Live Demo](https://deepgram.github.io/deepgram-transcription-debugger/)
+[Live Demo](http://ec2-54-176-210-130.us-west-1.compute.amazonaws.com:3000/)
 
 ## About
 
