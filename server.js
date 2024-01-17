@@ -55,7 +55,9 @@ app.post('/upload_files', upload.any('file'), async (req, res) => {
   let detect_topics = req.query.detect_topics ? (req.query.detect_topics.toLowerCase() == 'true' ? true : false) : false;
   let detect_entities = req.query.detect_entities ? (req.query.detect_entities.toLowerCase() == 'true' ? 'latest' : false) : false;
   
-  let options = {};
+  let options = {
+    tag: 'deepgram-transcription-debugger'
+  };
   
   if(keywords){
     options.keywords = keywords;
